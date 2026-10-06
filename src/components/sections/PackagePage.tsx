@@ -132,8 +132,10 @@ function Tile({ slug, sizes, big, className }: { slug: string; sizes: string; bi
   const set = photoSet(slug, "w");
   return (
     <li className={cn("frame aspect-[4/3]", className)}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={set.src} srcSet={set.srcSet} sizes={sizes} alt={c.alt} width={set.width} height={set.height} loading="lazy" decoding="async" />
+      <picture>
+        <source type="image/avif" srcSet={set.avifSrcSet} sizes={sizes} />
+        <img src={set.src} srcSet={set.srcSet} sizes={sizes} alt={c.alt} width={set.width} height={set.height} loading="lazy" decoding="async" />
+      </picture>
       <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-3 pt-10 pb-2.5 md:px-4 md:pb-3.5">
         <span className={cn("label block text-white", big ? "text-[1rem] md:text-[1.125rem]" : "text-[0.8125rem] md:text-[0.875rem]")}>{c.name}</span>
       </span>

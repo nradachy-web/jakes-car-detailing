@@ -23,17 +23,19 @@ export default function AtWork() {
               <li key={shot.slug} className={i === 0 ? "col-span-2 lg:col-span-1" : undefined}>
                 <figure>
                   <div className="frame aspect-[4/5]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={set.src}
-                      srcSet={set.srcSet}
-                      sizes={i === 0 ? "(min-width: 1024px) 33vw, 100vw" : "(min-width: 1024px) 33vw, 50vw"}
-                      alt={shot.alt}
-                      width={set.width}
-                      height={set.height}
-                      loading="lazy"
-                      decoding="async"
-                    />
+                    <picture>
+                      <source type="image/avif" srcSet={set.avifSrcSet} sizes={i === 0 ? "(min-width: 1024px) 33vw, 100vw" : "(min-width: 1024px) 33vw, 50vw"} />
+                      <img
+                        src={set.src}
+                        srcSet={set.srcSet}
+                        sizes={i === 0 ? "(min-width: 1024px) 33vw, 100vw" : "(min-width: 1024px) 33vw, 50vw"}
+                        alt={shot.alt}
+                        width={set.width}
+                        height={set.height}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </picture>
                   </div>
                   <figcaption className="mt-3.5">
                     <span className="label block">{shot.caption}</span>

@@ -17,19 +17,21 @@ export default function Photo({ slug, cut, alt, sizes, className, imgClassName, 
   const set = photoSet(slug, cut);
   return (
     <div className={cn("frame", className)}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={set.src}
-        srcSet={set.srcSet}
-        sizes={sizes}
-        alt={alt}
-        width={set.width}
-        height={set.height}
-        loading={priority ? "eager" : "lazy"}
-        decoding="async"
-        fetchPriority={priority ? "high" : undefined}
-        className={imgClassName}
-      />
+      <picture>
+        <source type="image/avif" srcSet={set.avifSrcSet} sizes={sizes} />
+        <img
+          src={set.src}
+          srcSet={set.srcSet}
+          sizes={sizes}
+          alt={alt}
+          width={set.width}
+          height={set.height}
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
+          fetchPriority={priority ? "high" : undefined}
+          className={imgClassName}
+        />
+      </picture>
     </div>
   );
 }

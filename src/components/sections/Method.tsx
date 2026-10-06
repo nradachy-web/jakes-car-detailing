@@ -10,11 +10,10 @@ export default function Method() {
         <div className="lg:sticky lg:top-[calc(var(--nav-h)+32px)] lg:self-start">
           <Photo
             slug={WORKING.wash.slug}
-            cut="f"
+            cut="t"
             alt={WORKING.wash.alt}
             sizes="(min-width: 1024px) 40vw, 100vw"
             className="aspect-[4/5] lg:aspect-[3/4]"
-            imgClassName="object-[50%_52%]"
           />
         </div>
 

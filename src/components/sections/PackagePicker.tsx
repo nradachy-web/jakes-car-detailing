@@ -81,8 +81,10 @@ export default function PackagePicker() {
             const set = photoSet(p.photo.slug, "t");
             return (
               <div key={p.id} className="frame aspect-[4/5] max-h-[72svh] lg:max-h-none" data-on={p.id === id}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={set.src} srcSet={set.srcSet} sizes="(min-width: 1024px) 40vw, 100vw" alt="" width={set.width} height={set.height} loading="lazy" decoding="async" />
+                <picture>
+                  <source type="image/avif" srcSet={set.avifSrcSet} sizes="(min-width: 1024px) 40vw, 100vw" />
+                  <img src={set.src} srcSet={set.srcSet} sizes="(min-width: 1024px) 40vw, 100vw" alt="" width={set.width} height={set.height} loading="lazy" decoding="async" />
+                </picture>
                 {p.photo.credit ? (
                   <span className="credit absolute right-3 bottom-3 rounded-[3px] bg-black/55 px-2 py-1 text-white/85">Photo: {p.photo.credit}</span>
                 ) : null}

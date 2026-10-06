@@ -7,7 +7,7 @@ import { asset } from "@/lib/asset";
  *
  * Cuts per photo (see the script):
  *   w = 4:3 landscape at 640 and 1280
- *   t = 4:5 portrait at 480 and 960
+ *   t = 4:5 portrait at 480, 750 and 960
  *   f = full frame at 720, 1080 and 1600 (working shots only)
  */
 export interface Car {
@@ -62,7 +62,7 @@ export const WORKING = {
 } as const;
 
 type Cut = "w" | "t" | "f";
-const WIDTHS: Record<Cut, number[]> = { w: [640, 1280], t: [480, 960], f: [720, 1080, 1600] };
+const WIDTHS: Record<Cut, number[]> = { w: [640, 1280], t: [480, 750, 960], f: [720, 1080, 1600] };
 const RATIO: Record<Cut, number> = { w: 3 / 4, t: 5 / 4, f: 3 / 2 };
 // Full frames that are not 2:3. The RS 3 shot is a very tall phone frame.
 const FULL_RATIO: Record<string, number> = { "jake-wash-rs3": 2589 / 1197 };

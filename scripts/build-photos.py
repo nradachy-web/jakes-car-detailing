@@ -9,7 +9,7 @@ public/photos and public/brand.
 Every portfolio photo is a tall phone shot with the car in the lower half, so
 each one gets two cuts built around the car's vertical centre (cy):
   {slug}-w{640,1280}.webp   4:3 landscape, car centred
-  {slug}-t{480,960}.webp    4:5 portrait, car sitting low in the frame
+  {slug}-t{480,750,960}.webp  4:5 portrait, car sitting low in the frame
 The three working shots keep their full frame as well:
   {slug}-f{720,1080,1600}.webp
 Every rendition is written as WebP and as AVIF.
@@ -82,15 +82,16 @@ def save(im: Image.Image, slug: str, tag: str, widths, quality=78):
         height_out = int(round(im.height * width_out / im.width))
         out = im.resize((width_out, height_out), Image.LANCZOS)
         out.save(OUT / f"{slug}-{tag}{width}.webp", "WEBP", quality=quality, method=6)
-        # AVIF beside every WebP. The page heroes serve it first (about a third lighter).
-        out.save(OUT / f"{slug}-{tag}{width}.avif", "AVIF", quality=max(40, quality - 24), speed=4)
+        # AVIF beside every WebP, served first. Phone photos full of foliage are
+        # heavy; AVIF at 45 is roughly half the WebP with no visible loss at these sizes.
+        out.save(OUT / f"{slug}-{tag}{width}.avif", "AVIF", quality=45, speed=4)
 
 
 def portfolio():
     for slug, (name, cy) in PORTFOLIO.items():
         im = load(name)
         save(cut(im, 4 / 3, cy), slug, "w", (640, 1280))
-        save(cut(im, 4 / 5, cy, anchor=0.62), slug, "t", (480, 960))
+        save(cut(im, 4 / 5, cy, anchor=0.62), slug, "t", (480, 750, 960))
 
 
 def working():
@@ -98,12 +99,12 @@ def working():
         im = load(name)
         save(im, slug, "f", (720, 1080, 1600), quality=80)
         save(cut(im, 4 / 3, cy_wide), slug, "w", (640, 1280))
-        save(cut(im, 4 / 5, cy_tall), slug, "t", (480, 960))
+        save(cut(im, 4 / 5, cy_tall), slug, "t", (480, 750, 960))
     # The only interior photo Jake has published. Small source (514px wide),
     # so it is only ever shown small.
     im = load("69811baff2974cd1938855a88fbfec13.jpg")
     save(im, "granturismo-interior", "f", (514,), quality=84)
-    save(cut(im, 4 / 5, 0.5), "granturismo-interior", "t", (480, 960), quality=84)
+    save(cut(im, 4 / 5, 0.5), "granturismo-interior", "t", (480, 750, 960), quality=84)
 
 
 def logo():
@@ -203,7 +204,7 @@ def logo():
             break
     if j is None:
         raise SystemExit("could not isolate the J for the favicon")
-    for size, name in ((512, "icon-512.png"), (180, "apple-icon.png")):
+    for size, name in ((512, "icon-512.png"), (180, "apple-icon.png"), (96, "icon-96.png")):
         tile = Image.new("RGB", (size, size), (0, 0, 0))
         scale = (size * 0.6) / max(j.size)
         jj = j.resize((int(j.width * scale), int(j.height * scale)), Image.LANCZOS)
