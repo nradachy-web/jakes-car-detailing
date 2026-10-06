@@ -59,11 +59,16 @@ Every custom class in `globals.css` lives inside `@layer`, so utilities always w
 
 Desktop is iCloud synced, so `.next`, `out` and `node_modules` are symlinks to `*.nosync` folders. Never undo that. Build locally with `npm run build:local` (plain `next build` replaces the `out` symlink with a real folder). Never run `next dev` here. The local build prints "module not found" warnings from inside `node_modules.nosync`; they come from the symlink and do not appear on CI.
 
-Preview: GitHub Pages, built with `NEXT_PUBLIC_BASE_PATH=/jakes-car-detailing`, which also keeps the preview out of search (noindex and a disallow-all robots file).
+Hosting: GitHub Pages from the Actions workflow, live at https://www.jakesdetailing.ca since 2026-10-06 (custom domain set through the Pages API, `public/CNAME`, HTTPS enforced). Every push to `main` deploys to production. The old preview address redirects to the domain. To build a private preview again, set `NEXT_PUBLIC_BASE_PATH` in `deploy.yml` on a separate repo or branch deploy: it turns on noindex and a disallow-all robots file.
 
-## Launch checklist
+## Launch record and what is still open
+
+Done on 2026-10-06: Jake pointed GoDaddy at GitHub (A @ to 185.199.108.153 through .111.153, CNAME www to nradachy-web.github.io), then `scripts/go-live.sh` switched the build to the domain root, registered the custom domain and enforced HTTPS once the certificate was issued. The script has done its job and is kept as a record; it will refuse to run again.
+
+Old Wix URLs keep working: `/book-online`, `/portfolio`, `/blog` and `/post/*` kept their paths, and `/service-page/*`, `/booking-calendar/*`, `/portfolio-collections/*` and `/blank*` have redirect stubs in `public/`.
+
+Still open:
 
 1. Web3Forms access key for Jake's inbox as the repo variable `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY`, then a real test submission that Jake confirms he received. Until then the form hands the request off as a ready-made text or email.
-2. Remove `NEXT_PUBLIC_BASE_PATH` from `deploy.yml`, add `public/CNAME`, set the Pages custom domain through the API, point DNS from Wix to GitHub.
-3. The old Wix URLs (`/service-page/*`, `/booking-calendar/*`, `/portfolio-collections/*`, `/blank*`) already have redirect stubs in `public/`. `/book-online`, `/portfolio`, `/blog` and `/post/*` keep their paths.
-4. Confirm with Jake: ceramic and correction details, the durations and prices as listed, his hours, whether he wants a street address shown, his real Instagram handle, more interior photos.
+2. Confirm with Jake: ceramic and correction details, that the full detail is the exterior plus the interior package, the durations and prices as listed, his hours, whether he wants a street address shown, his real Instagram handle, more interior photos.
+3. Submit `https://www.jakesdetailing.ca/sitemap.xml` in Search Console.
