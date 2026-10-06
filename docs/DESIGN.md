@@ -69,6 +69,6 @@ Old Wix URLs keep working: `/book-online`, `/portfolio`, `/blog` and `/post/*` k
 
 Still open:
 
-1. The Web3Forms access key is set (repo variable `NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY`, 2026-10-06) and is in the live bundle. Delivery is NOT yet proven: Web3Forms can report success for a dead key, so a real submission from a real browser has to arrive in Jake's inbox and be confirmed by him. Automated browsers and curl cannot reach `api.web3forms.com` (Cloudflare answers 403), so a scripted test proves nothing either way; when a send fails the form falls back to the ready-made text or email.
+1. Booking requests now go two places at once (2026-10-06): Jake's booking desk at shop-desk-nine.vercel.app, which saves them, and an email through Web3Forms. The desk path is proven end to end on production. The Web3Forms path is still unproven: its key is in the live bundle, but Web3Forms can report success for a dead key and automated browsers cannot reach it, so only a real submission that Jake confirms in his inbox settles it. The desk repo is `nradachy-web/shop-desk`; read its `docs/DESK.md` before touching the form's delivery.
 2. Confirm with Jake: ceramic and correction details, that the full detail is the exterior plus the interior package, the durations and prices as listed, his hours, whether he wants a street address shown, his real Instagram handle, more interior photos.
 3. Submit `https://www.jakesdetailing.ca/sitemap.xml` in Search Console.
