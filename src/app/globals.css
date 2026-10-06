@@ -403,7 +403,7 @@
   }
   @media (min-width: 1024px) {
     .hero--sub {
-      min-height: min(820px, 88svh);
+      min-height: min(740px, 84svh);
     }
     .hero--sub .hero-photo {
       width: 58%;

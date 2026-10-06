@@ -18,7 +18,6 @@ export default function Hero() {
       <div className="hero-photo">
         <picture>
           <source media="(min-width: 1024px)" srcSet={full.srcSet} sizes="62vw" />
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={tall.src}
             srcSet={tall.srcSet}

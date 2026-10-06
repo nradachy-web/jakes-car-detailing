@@ -2,7 +2,14 @@ import Link from "next/link";
 import { BOOK_HREF, BOOK_LABEL, BRAND, HOURS } from "@/lib/constants";
 
 /** Closing band in the Huracán blue: the phone number at headline size. */
-export default function BookBand({ title = "Book your detail." }: { title?: string }) {
+export default function BookBand({
+  title = "Book your detail.",
+  cta,
+}: {
+  title?: string;
+  /** Overrides the main button, e.g. "Get a free quote" on the quote-only services. */
+  cta?: { label: string; href: string };
+}) {
   return (
     <section className="on-blue section">
       <div className="wrap">
@@ -23,8 +30,8 @@ export default function BookBand({ title = "Book your detail." }: { title?: stri
             ))}
           </dl>
           <div className="flex flex-wrap gap-3">
-            <Link href={BOOK_HREF} className="btn btn-solid">
-              {BOOK_LABEL}
+            <Link href={cta?.href ?? BOOK_HREF} className="btn btn-solid">
+              {cta?.label ?? BOOK_LABEL}
             </Link>
             <a href={`sms:${BRAND.phoneTel}`} className="btn btn-ghost">
               Text Jake

@@ -16,6 +16,8 @@ const zalando = Zalando_Sans({
   style: ["normal"],
   variable: "--font-zalando",
   display: "swap",
+  // Zalando Sans is too new for Next's fallback-metrics table.
+  adjustFontFallback: false,
 });
 
 // NEXT_PUBLIC_BASE_PATH is set only by the GitHub Pages preview build

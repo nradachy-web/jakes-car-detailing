@@ -25,12 +25,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close everything when the route changes.
-  useEffect(() => {
-    setMenuOpen(false);
-    setDropOpen(false);
-  }, [pathname]);
-
   // The open mobile menu owns the screen: lock the page behind it.
   useEffect(() => {
     document.documentElement.style.overflow = menuOpen ? "hidden" : "";
@@ -101,6 +95,7 @@ export default function Navbar() {
                   </button>
                   <div
                     id="nav-detailing"
+                    onClick={() => setDropOpen(false)}
                     className={cn(
                       "absolute top-full left-[-20px] w-[340px] rounded-[6px] border border-white/14 bg-black p-2 transition-[opacity,transform,visibility] duration-200",
                       dropOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0",
@@ -160,8 +155,12 @@ export default function Navbar() {
       </div>
 
       {/* Mobile and tablet menu */}
+      {/* Any link inside closes the menu, including links to the page you are on. */}
       <div
         id="mobile-menu"
+        onClick={(e) => {
+          if ((e.target as HTMLElement).closest("a")) setMenuOpen(false);
+        }}
         className={cn(
           "fixed inset-x-0 top-[var(--nav-h)] bottom-0 overflow-y-auto bg-black transition-[opacity,visibility] duration-300 xl:hidden",
           menuOpen ? "visible opacity-100" : "invisible opacity-0",
