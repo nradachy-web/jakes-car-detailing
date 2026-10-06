@@ -19,7 +19,7 @@ export default function Method() {
         </div>
 
         <div>
-          <h2 className="d2">Every car is washed by hand.</h2>
+          <h2 className="d2">Washed by hand.</h2>
           <p className="lede muted mt-6">
             No brushes and no drive-through tunnel. The exterior detail follows the same five steps, in the same order.
           </p>

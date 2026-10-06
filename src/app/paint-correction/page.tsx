@@ -75,11 +75,11 @@ const PROCESS = [
   },
   {
     name: "Wash and decontaminate",
-    body: "A hand wash and a full decontamination come first, so the polisher works on clean paint and nothing gets dragged across it.",
+    body: "A hand wash and a full decontamination come before any polishing, so the polisher works on clean paint and nothing gets dragged across it.",
   },
   {
     name: "Machine polish",
-    body: "A machine polisher and abrasive polish level a very thin layer of the clear coat, taking the marks with it. How much work that is depends on the paint, and Jake confirms it in your quote.",
+    body: "A machine polisher and abrasive polish level a very thin layer of the clear coat, taking the marks with it. How much work that is depends on the paint.",
   },
   {
     name: "Inspect again",
@@ -106,20 +106,19 @@ const FAQ = [
       <p>
         No. Polishing removes marks that sit in the clear coat, which covers swirls, haze and most wash scratches. A
         scratch that goes through the clear coat cannot be polished out, though it can usually be made less obvious.
-        Jake will show you which is which when he looks at the car.
       </p>
     ),
-    text: "No. Polishing removes marks that sit in the clear coat, which covers swirls, haze and most wash scratches. A scratch that goes through the clear coat cannot be polished out, though it can usually be made less obvious. Jake will show you which is which when he looks at the car.",
+    text: "No. Polishing removes marks that sit in the clear coat, which covers swirls, haze and most wash scratches. A scratch that goes through the clear coat cannot be polished out, though it can usually be made less obvious.",
   },
   {
     q: "How long does it take?",
     a: (
       <p>
-        It depends on the size of the vehicle, the colour and how marked the paint is. Jake confirms the time with your
-        free quote.
+        It depends on the size of the vehicle, the colour and how marked the paint is. Ask Jake when you get your free
+        quote.
       </p>
     ),
-    text: "It depends on the size of the vehicle, the colour and how marked the paint is. Jake confirms the time with your free quote.",
+    text: "It depends on the size of the vehicle, the colour and how marked the paint is. Ask Jake when you get your free quote.",
   },
   {
     q: "Do I need a ceramic coating after?",
@@ -245,10 +244,9 @@ export default function PaintCorrectionPage() {
       <section className="on-spruce section">
         <div className="wrap grid gap-12 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:gap-20 xl:gap-28">
           <div className="lg:sticky lg:top-[calc(var(--nav-h)+32px)] lg:self-start">
-            <h2 className="d2">How a correction goes.</h2>
+            <h2 className="d2">How a correction usually goes.</h2>
             <p className="lede muted mt-6">
-              Five steps, in this order. The polishing itself is matched to your paint, so the details come with your
-              free quote.
+              The usual order. The details for your car come with your free quote.
             </p>
           </div>
           <StepRows steps={PROCESS} />

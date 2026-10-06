@@ -12,6 +12,7 @@ each one gets two cuts built around the car's vertical centre (cy):
   {slug}-t{480,960}.webp    4:5 portrait, car sitting low in the frame
 The three working shots keep their full frame as well:
   {slug}-f{720,1080,1600}.webp
+Every rendition is written as WebP and as AVIF.
 """
 from pathlib import Path
 from PIL import Image, ImageOps
@@ -81,6 +82,8 @@ def save(im: Image.Image, slug: str, tag: str, widths, quality=78):
         height_out = int(round(im.height * width_out / im.width))
         out = im.resize((width_out, height_out), Image.LANCZOS)
         out.save(OUT / f"{slug}-{tag}{width}.webp", "WEBP", quality=quality, method=6)
+        # AVIF beside every WebP. The page heroes serve it first (about a third lighter).
+        out.save(OUT / f"{slug}-{tag}{width}.avif", "AVIF", quality=max(40, quality - 24), speed=4)
 
 
 def portfolio():

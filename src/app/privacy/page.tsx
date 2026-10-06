@@ -52,8 +52,9 @@ export default function PrivacyPage() {
               <a href="https://web3forms.com" target="_blank" rel="noopener" className="link">
                 Web3Forms
               </a>
-              , which passes your message on to Jake&rsquo;s inbox. If you call, text or email instead, your message goes
-              straight to Jake&rsquo;s phone or inbox.
+              , which passes your message on to Jake&rsquo;s inbox. If the form cannot send, it shows your request as a
+              ready-made text or email for you to send yourself, and this site keeps no copy. If you call, text or email
+              instead, your message goes straight to Jake&rsquo;s phone or inbox.
             </p>
 
             <h2>Tracking</h2>
@@ -62,8 +63,7 @@ export default function PrivacyPage() {
               site, not from a third party.
             </p>
             <p>
-              Some links lead to Google, for the map listing and the reviews. Once you follow one, you are on
-              Google&rsquo;s site and its own privacy policy applies.
+              Some links lead to other sites. Once you follow one, that site&rsquo;s own privacy policy applies.
             </p>
 
             <h2>Seeing or removing your details</h2>

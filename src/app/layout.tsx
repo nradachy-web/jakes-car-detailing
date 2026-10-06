@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import StickyBar from "@/components/layout/StickyBar";
-import { BRAND, BUSINESS_DESCRIPTION, HOURS, PACKAGES, QUOTED, SEO, SITE_URL } from "@/lib/constants";
+import { BRAND, BUSINESS_DESCRIPTION, HOURS, OG_IMAGE_URL, PACKAGES, QUOTED, SEO, SITE_URL } from "@/lib/constants";
 import { canonicalUrl } from "@/lib/seo";
 
 // One family for the whole site. The width axis does the work: wide for
@@ -37,13 +37,13 @@ export const metadata: Metadata = {
     siteName: BRAND.name,
     title: SEO.home.title,
     description: SEO.home.description,
-    images: [{ url: "/og-image.jpg", width: 1200, height: 630, alt: BRAND.name }],
+    images: [{ url: OG_IMAGE_URL, width: 1200, height: 630, alt: BRAND.name }],
   },
   twitter: {
     card: "summary_large_image",
     title: SEO.home.title,
     description: SEO.home.description,
-    images: ["/og-image.jpg"],
+    images: [OG_IMAGE_URL],
   },
   robots: { index: !isPreview, follow: true },
 };
@@ -67,7 +67,6 @@ const localBusinessJsonLd = {
   email: BRAND.email,
   image: `${SITE_URL}/og-image.jpg`,
   logo: `${SITE_URL}/brand/logo-full.png`,
-  priceRange: "$$",
   currenciesAccepted: "CAD",
   address: {
     "@type": "PostalAddress",

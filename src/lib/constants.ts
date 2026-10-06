@@ -17,6 +17,14 @@
 
 export const SITE_URL = "https://www.jakesdetailing.ca";
 
+/**
+ * Where share images are fetched from. The GitHub Pages preview sets
+ * NEXT_PUBLIC_SHARE_ORIGIN (deploy.yml) so a texted preview link still unfurls
+ * with the photo; jakesdetailing.ca does not serve this build's files yet.
+ */
+export const SHARE_ORIGIN = process.env.NEXT_PUBLIC_SHARE_ORIGIN || SITE_URL;
+export const OG_IMAGE_URL = `${SHARE_ORIGIN}/og-image.jpg`;
+
 export const BRAND = {
   name: "Jake's Car Detailing",
   tagline: "Detailing done right.",
@@ -77,7 +85,7 @@ export const PACKAGES: DetailPackage[] = [
       "Exterior decontamination",
       "Microfiber hand dry",
     ],
-    photo: { slug: "bmw-e46", alt: "A grey BMW coupe, freshly washed, on a wet driveway" },
+    photo: { slug: "bmw-e46", alt: "A grey BMW coupe on a wet driveway" },
   },
   {
     id: "interior",
@@ -88,8 +96,8 @@ export const PACKAGES: DetailPackage[] = [
     duration: "1 hr",
     line: "A deep clean for the cabin, from the carpets to the dash.",
     body: "A deep clean for your vehicle's interior: vacuuming, upholstery cleaning and dashboard polishing, done with premium products.",
-    includes: ["Full interior vacuum", "Upholstery cleaning", "Dashboard polishing"],
-    photo: { slug: "granturismo-interior", alt: "The red leather interior of a Maserati GranTurismo after an interior detail" },
+    includes: ["Interior vacuum", "Upholstery cleaning", "Dashboard polishing"],
+    photo: { slug: "granturismo-interior", alt: "The red leather interior of a Maserati GranTurismo" },
   },
   {
     id: "full",
@@ -100,10 +108,10 @@ export const PACKAGES: DetailPackage[] = [
     duration: "3 hr",
     line: "Inside and out, in one appointment.",
     body: "A complete interior and exterior detail, leaving every part of your vehicle professionally cleaned and restored to a pristine finish.",
-    includes: ["Everything in the exterior detail", "Everything in the interior detail"],
+    includes: ["Complete exterior detail", "Complete interior detail"],
     photo: {
       slug: "jake-dry-huracan",
-      alt: "Jake drying the hood of a blue Lamborghini Huracán with a microfiber towel",
+      alt: "Jake drying a blue Lamborghini Huracán with a towel",
       credit: "@breckenmutch",
     },
   },
@@ -164,11 +172,11 @@ export const METHOD: { name: string; body: string }[] = [
   },
   {
     name: "Two-bucket hand wash",
-    body: "One bucket of soap, one to rinse the mitt. Grit comes off the car and stays off.",
+    body: "One bucket of soap, one to rinse the mitt, so less grit goes back on the paint.",
   },
   {
     name: "Wheels and tires",
-    body: "Brake dust and road film cleaned off the wheels and tires as their own job.",
+    body: "Brake dust and road film are cleaned off the wheels and tires.",
   },
   {
     name: "Decontamination",
@@ -184,7 +192,7 @@ export const SEO = {
   home: {
     title: "Jake's Car Detailing | Car Detailing in Halifax, NS",
     description:
-      "Hand wash detailing in Halifax, Nova Scotia. Exterior from $100, interior $150, full detail $200. Paint correction and ceramic coating by quote. Rated 5.0 on Google.",
+      "Hand wash detailing in Halifax, Nova Scotia. Exterior $100, interior $150, full detail $200. Free quotes on paint correction and ceramic coating. Rated 5.0 on Google.",
   },
 } as const;
 

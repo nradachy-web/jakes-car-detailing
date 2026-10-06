@@ -24,7 +24,7 @@ export default function PortfolioPage() {
         title={["Cars Jake", "has detailed."]}
         lede={
           <p>
-            From daily drivers to a Lamborghini Huracán. Every car on this page was detailed by Jake in {BRAND.city}.
+            Daily drivers to a Lamborghini Huracán, all from Jake&rsquo;s own gallery.
           </p>
         }
         photo={{ slug: lead.slug, alt: lead.alt }}
@@ -45,7 +45,7 @@ export default function PortfolioPage() {
       <section className="on-spruce section">
         <div className="wrap">
           <div className="max-w-[820px]">
-            <h2 className="d2">Every one detailed by Jake.</h2>
+            <h2 className="d2">The gallery.</h2>
             <p className="lede muted mt-6">{CARS.length} cars, from a Chevrolet pickup to a Lamborghini.</p>
           </div>
           <div className="mt-12 lg:mt-16">

@@ -171,7 +171,7 @@ function BeadPanel({ mode, rinse, label }: { mode: Mode; rinse: number; label: s
       dpr = Math.min(window.devicePixelRatio || 1, 2);
       canvas.width = Math.round(W * dpr);
       canvas.height = Math.round(H * dpr);
-      scale = Math.max(0.8, Math.min(1.35, W / 900));
+      scale = Math.max(0.6, Math.min(1.35, W / 900));
       fw = Math.max(1, Math.round(W / FILM));
       fh = Math.max(1, Math.round(H / FILM));
       film = document.createElement("canvas");

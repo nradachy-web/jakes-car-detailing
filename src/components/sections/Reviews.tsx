@@ -33,7 +33,7 @@ export default function Reviews({ lead = LEAD_REVIEW, rest = REVIEWS }: { lead?:
               <figcaption className="mt-6">
                 <span className="label">{lead.author}</span>
                 <span className="muted block text-[0.875rem]">
-                  Google review{lead.about ? `, ${lead.about.charAt(0).toLowerCase()}${lead.about.slice(1)}` : ""}
+                  Google review{lead.about ? `, ${lead.about}` : ""}
                 </span>
               </figcaption>
             </figure>

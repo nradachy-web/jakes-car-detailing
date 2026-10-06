@@ -17,24 +17,24 @@ export interface Car {
 }
 
 export const CARS: Car[] = [
-  { slug: "huracan", name: "Lamborghini Huracán", alt: "A matte blue Lamborghini Huracán on a driveway after a detail" },
-  { slug: "audi-r8", name: "Audi R8", alt: "A yellow Audi R8 on a driveway after a detail" },
-  { slug: "granturismo", name: "Maserati GranTurismo", alt: "A white Maserati GranTurismo on a driveway after a detail" },
-  { slug: "cybertruck", name: "Tesla Cybertruck", alt: "A Tesla Cybertruck on a driveway after a wash" },
-  { slug: "bmw-m4", name: "BMW M4", alt: "A white BMW M4 on a wet driveway after a wash" },
-  { slug: "corvette-c5", name: "Chevrolet Corvette C5", alt: "A red Chevrolet Corvette C5 on a brick driveway after a detail" },
-  { slug: "defender", name: "Land Rover Defender", alt: "A white Land Rover Defender on a driveway after a detail" },
-  { slug: "bmw-e46", name: "BMW E46 coupe", alt: "A grey BMW E46 coupe on a wet driveway after a wash" },
-  { slug: "audi-rs3", name: "Audi RS 3", alt: "A white Audi RS 3 on a driveway after a wash" },
-  { slug: "bmw-ix", name: "BMW iX", alt: "A dark red BMW iX on a driveway after a detail" },
-  { slug: "range-rover-sport", name: "Range Rover Sport", alt: "A black Range Rover Sport on a driveway after a detail" },
-  { slug: "acura-tlx", name: "Acura TLX", alt: "A white Acura TLX on a driveway after a detail" },
-  { slug: "mercedes-glc", name: "Mercedes-Benz GLC", alt: "A silver Mercedes-Benz GLC on a driveway after a wash" },
-  { slug: "jetta-gli", name: "Volkswagen Jetta GLI", alt: "A red Volkswagen Jetta GLI on a driveway after a detail" },
-  { slug: "bmw-3-series", name: "BMW 3 Series", alt: "A blue BMW 3 Series on a driveway after a detail" },
-  { slug: "discovery-sport", name: "Land Rover Discovery Sport", alt: "A dark blue Land Rover Discovery Sport on a driveway after a detail" },
-  { slug: "audi-a5-cabriolet", name: "Audi A5 Cabriolet", alt: "A dark Audi A5 Cabriolet on a driveway after a detail" },
-  { slug: "chevy-ck", name: "Chevrolet C/K pickup", alt: "A blue Chevrolet C/K pickup on a driveway after a wash" },
+  { slug: "huracan", name: "Lamborghini Huracán", alt: "A matte blue Lamborghini Huracán on a driveway" },
+  { slug: "audi-r8", name: "Audi R8", alt: "A yellow Audi R8 on a driveway" },
+  { slug: "granturismo", name: "Maserati GranTurismo", alt: "A white Maserati GranTurismo on a driveway" },
+  { slug: "cybertruck", name: "Tesla Cybertruck", alt: "A Tesla Cybertruck on a driveway" },
+  { slug: "bmw-m4", name: "BMW M4", alt: "A white BMW M4 on a wet driveway" },
+  { slug: "corvette-c5", name: "Chevrolet Corvette C5", alt: "A red Chevrolet Corvette C5 on a brick driveway" },
+  { slug: "defender", name: "Land Rover Defender", alt: "A white Land Rover Defender on a driveway" },
+  { slug: "bmw-e46", name: "BMW E46 coupe", alt: "A grey BMW E46 coupe on a wet driveway" },
+  { slug: "audi-rs3", name: "Audi RS 3", alt: "A white Audi RS 3 on a driveway" },
+  { slug: "bmw-ix", name: "BMW iX", alt: "A dark red BMW iX on a driveway" },
+  { slug: "range-rover-sport", name: "Range Rover Sport", alt: "A black Range Rover Sport on a driveway" },
+  { slug: "acura-tlx", name: "Acura TLX", alt: "A white Acura TLX on a driveway" },
+  { slug: "mercedes-glc", name: "Mercedes-Benz GLC", alt: "A silver Mercedes-Benz GLC on a driveway" },
+  { slug: "jetta-gli", name: "Volkswagen Jetta GLI", alt: "A red Volkswagen Jetta GLI on a driveway" },
+  { slug: "bmw-3-series", name: "BMW 3 Series", alt: "A blue BMW 3 Series on a driveway" },
+  { slug: "discovery-sport", name: "Land Rover Discovery Sport", alt: "A dark blue Land Rover Discovery Sport on a driveway" },
+  { slug: "audi-a5-cabriolet", name: "Audi A5 Cabriolet", alt: "A dark Audi A5 Cabriolet on a driveway" },
+  { slug: "chevy-ck", name: "Chevrolet C/K pickup", alt: "A blue Chevrolet C/K pickup on a driveway" },
 ];
 
 export const car = (slug: string): Car => {
@@ -53,7 +53,7 @@ export const WORKING = {
   },
   dry: {
     slug: "jake-dry-huracan",
-    alt: "Jake drying the hood of a blue Lamborghini Huracán with a microfiber towel",
+    alt: "Jake drying a blue Lamborghini Huracán with a towel",
   },
   wash: {
     slug: "jake-wash-rs3",
@@ -74,6 +74,7 @@ export function photoSet(slug: string, cut: Cut) {
   return {
     src: asset(`/photos/${slug}-${cut}${largest}.webp`),
     srcSet: widths.map((w) => `${asset(`/photos/${slug}-${cut}${w}.webp`)} ${w}w`).join(", "),
+    avifSrcSet: widths.map((w) => `${asset(`/photos/${slug}-${cut}${w}.avif`)} ${w}w`).join(", "),
     width: largest,
     height: Math.round(largest * (cut === "f" ? (FULL_RATIO[slug] ?? RATIO.f) : RATIO[cut])),
   };

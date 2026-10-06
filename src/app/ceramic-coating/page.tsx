@@ -27,7 +27,7 @@ const WINTER_POST = "/post/why-winter-vehicle-detailing-is-essential-in-nova-sco
 export const metadata: Metadata = pageMeta({
   title: "Ceramic Coating in Halifax, NS | Jake's Car Detailing",
   description:
-    "A ceramic coating makes water bead, keeps salt and road film from clinging, and makes every wash easier. Ceramic coating in Halifax by Jake's Car Detailing. Free quotes.",
+    "A ceramic coating makes water bead and makes salt and road film easier to wash off. Ceramic coating in Halifax by Jake's Car Detailing. Free quotes.",
   path: PATH,
 });
 
@@ -46,7 +46,7 @@ const serviceJsonLd = {
 const PREP = [
   {
     name: "Wash",
-    body: "A foam pre-wash and a two-bucket hand wash, the same way every car here is washed.",
+    body: "A foam pre-wash and a two-bucket hand wash, the same steps as the exterior detail.",
   },
   {
     name: "Decontaminate",
@@ -70,7 +70,7 @@ const PREP = [
   },
   {
     name: "Let it cure",
-    body: "The coating needs time to harden. Jake tells you how to look after the car while it does, and for how long.",
+    body: "The coating needs time to harden once it is on.",
   },
 ];
 
@@ -93,25 +93,23 @@ const FAQ = [
     q: "How long does a ceramic coating last?",
     a: (
       <p>
-        It depends on the coating and on how the car is washed and stored. Jake goes through the options, and what to
-        expect from each, in your quote.
+        It depends on the coating and on how the car is washed and stored. Ask Jake when you get your free quote.
       </p>
     ),
-    text: "It depends on the coating and on how the car is washed and stored. Jake goes through the options, and what to expect from each, in your quote.",
+    text: "It depends on the coating and on how the car is washed and stored. Ask Jake when you get your free quote.",
   },
   {
     q: "What does it cost?",
     a: (
       <p>
-        Every coating is a free quote. The size of the vehicle and how much correction the paint needs are the two
-        things that change it.{" "}
+        Every coating starts with a free quote.{" "}
         <Link href={QUOTE_HREF} className="link">
           Tell us about your vehicle
         </Link>{" "}
         and Jake will get back to you. No pressure.
       </p>
     ),
-    text: "Every coating is a free quote. The size of the vehicle and how much correction the paint needs are the two things that change it. Tell us about your vehicle and Jake will get back to you. No pressure.",
+    text: "Every coating starts with a free quote. Tell us about your vehicle and Jake will get back to you. No pressure.",
   },
   {
     q: "How do I wash a coated car?",
@@ -186,7 +184,7 @@ export default function CeramicCoatingPage() {
               </p>
               <p className="muted">
                 The paint underneath has to be right first. A coating does not hide anything. It keeps the finish it
-                was given, which is why the car is corrected before it is coated.
+                was given, which is why paint is usually corrected before it is coated.
               </p>
             </div>
             <QuoteActions service="ceramic" className="mt-10" />

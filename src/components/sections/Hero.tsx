@@ -17,7 +17,9 @@ export default function Hero() {
     <section className="hero on-dark">
       <div className="hero-photo">
         <picture>
+          <source media="(min-width: 1024px)" type="image/avif" srcSet={full.avifSrcSet} sizes="62vw" />
           <source media="(min-width: 1024px)" srcSet={full.srcSet} sizes="62vw" />
+          <source type="image/avif" srcSet={tall.avifSrcSet} sizes="100vw" />
           <img
             src={tall.src}
             srcSet={tall.srcSet}
@@ -43,8 +45,8 @@ export default function Hero() {
           </span>
         </h1>
         <p className="lede mt-7 text-white/90 lg:mt-9">
-          Foam pre-wash, a two-bucket hand wash and a careful microfiber dry, by Jake in {BRAND.city}. Inside, outside or
-          the full detail, from ${PACKAGES[0].price}.
+          Foam pre-wash, a two-bucket hand wash and a careful microfiber dry, by Jake in {BRAND.city}. Book the outside,
+          the inside or both.
         </p>
         <div className="mt-8 grid gap-3 sm:flex sm:flex-wrap">
           <Link href={BOOK_HREF} className="btn btn-primary">

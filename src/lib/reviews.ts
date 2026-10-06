@@ -12,14 +12,14 @@ export interface Review {
   author: string;
   text: string;
   full: boolean;
-  about?: string; // what the reviewer says they had done, in their words
+  about?: string; // what the reviewer says they had done, in their own words and casing
 }
 
 export const LEAD_REVIEW: Review = {
   author: "Ashley Carter",
   text: "He’s professional, easy to talk to, and takes real pride in his work. You can tell he cares about the results and not just getting the job done quickly.",
   full: false,
-  about: "Full inside-and-out detail",
+  about: "full inside-and-out detail",
 };
 
 export const REVIEWS: Review[] = [
@@ -27,7 +27,7 @@ export const REVIEWS: Review[] = [
     author: "colbY -_-",
     text: "Jake detailed my C5, and I honestly couldn’t believe the difference when I picked it up. It looked cleaner than the day I bought it.",
     full: false,
-    about: "Corvette C5",
+    about: "C5",
   },
   {
     author: "Ty Perry",
@@ -51,7 +51,7 @@ export const CORRECTION_REVIEW: Review = {
   author: "Mya Gennette",
   text: "I took my Mini Cooper to Jake’s Car Detailing for a paint correction and clay bar treatment, and I honestly can’t believe the difference. The paint has never looked this good, not even when I first got the car.",
   full: false,
-  about: "Paint correction and clay bar, Mini Cooper",
+  about: "paint correction and clay bar treatment, Mini Cooper",
 };
 
 export const CORRECTION_REVIEW_MORE =

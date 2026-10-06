@@ -15,7 +15,7 @@ export default function PullQuote({ review, more }: { review: Review; more?: str
           <Stars className="mt-5 text-[#c98a00]" />
           <p className="mt-4">
             <span className="label block">{review.author}</span>
-            <span className="muted block text-[0.875rem]">Google review{review.about ? `, ${review.about.charAt(0).toLowerCase()}${review.about.slice(1)}` : ""}</span>
+            <span className="muted block text-[0.875rem]">Google review{review.about ? `, ${review.about}` : ""}</span>
           </p>
           <a href={BRAND.google.mapsUrl} target="_blank" rel="noopener" className="link mt-6 inline-block">
             Read it on Google

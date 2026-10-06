@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { BRAND, SITE_URL } from "@/lib/constants";
+import { BRAND, OG_IMAGE_URL, SITE_URL } from "@/lib/constants";
 
 /**
  * SEO helpers. next.config.ts sets trailingSlash: true, so every canonical,
@@ -18,7 +18,7 @@ export function canonicalUrl(path: string): string {
   return SITE_URL + canonicalPath(path);
 }
 
-const OG_IMAGE = { url: "/og-image.jpg", width: 1200, height: 630, alt: BRAND.name };
+const OG_IMAGE = { url: OG_IMAGE_URL, width: 1200, height: 630, alt: BRAND.name };
 
 /**
  * Per-page metadata. metadataBase is set in layout.tsx, so the relative paths

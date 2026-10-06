@@ -72,10 +72,10 @@ function copyFor(pkg: DetailPackage): PageCopy {
     case "interior":
       return {
         title: ["Interior", "detailing."],
-        lede: `A deep clean for the cabin: vacuuming, upholstery cleaning and dashboard polishing, done with premium products. ${priceLine}`,
+        lede: `Vacuuming, upholstery cleaning and dashboard polishing. ${priceLine}`,
         hero: { slug: "granturismo", alt: car("granturismo").alt, cut: "w", focus: "50% 56%" },
         heading: "A deep clean for the cabin.",
-        band: { title: "Any cabin, cleaned properly.", cars: ["defender", "range-rover-sport"] },
+        band: { title: "A few of the cars Jake has detailed.", cars: ["defender", "range-rover-sport"] },
         reviews: [reviewBy("Ty Perry", 1)],
       };
     default:
@@ -208,7 +208,6 @@ function FullPrice({ pkg, heading }: { pkg: DetailPackage; heading: string }) {
     { pkg: pkgById("exterior"), side: "Outside" },
     { pkg: pkgById("interior"), side: "Inside" },
   ];
-  const apart = parts.reduce((sum, part) => sum + part.pkg.price, 0);
   return (
     <section className="on-light section">
       <div className="wrap">
@@ -238,7 +237,7 @@ function FullPrice({ pkg, heading }: { pkg: DetailPackage; heading: string }) {
         <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-5 lg:mt-16">
           <BookButton pkg={pkg} />
           <p className="muted max-w-[46ch] text-[0.9375rem]">
-            Booked separately, the two come to ${apart}. Booked together as the full detail, ${pkg.price}.
+            On their own, the exterior detail is ${parts[0].pkg.price} and the interior detail is ${parts[1].pkg.price}.
           </p>
         </div>
       </div>
@@ -339,7 +338,7 @@ function Quote({ reviews, flip }: { reviews: Review[]; flip?: boolean }) {
           <figcaption className="mt-6">
             <span className="label">{lead.author}</span>
             <span className="muted block text-[0.875rem]">
-              Google review{about ? `, ${about.charAt(0).toLowerCase()}${about.slice(1)}` : ""}
+              Google review{about ? `, ${about}` : ""}
             </span>
           </figcaption>
         </figure>
@@ -354,7 +353,7 @@ function faqFor(pkg: DetailPackage) {
   const kind = kindOf(pkg);
   const included =
     pkg.id === "full"
-      ? `Everything in the exterior detail (${inWords(pkgById("exterior").includes).toLowerCase()}) and everything in the interior detail (${inWords(pkgById("interior").includes).toLowerCase()}).`
+      ? `A complete interior and exterior detail. Outside: ${inWords(pkgById("exterior").includes).toLowerCase()}. Inside: ${inWords(pkgById("interior").includes).toLowerCase()}.`
       : `${inWords(pkg.includes)}.`;
   const hoursText = HOURS.map((h) => `${h.days}, ${h.hours}`).join(". ");
 

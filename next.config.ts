@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  // One request fewer before first paint: the stylesheet ships inside the HTML.
+  experimental: {
+    inlineCss: true,
+  },
 };
 
 export default nextConfig;

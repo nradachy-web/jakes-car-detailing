@@ -14,19 +14,20 @@ export default function PackagePicker() {
   const [id, setId] = useState<PackageId>("full");
 
   return (
-    <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.78fr)] lg:gap-16 xl:gap-24">
-      <div>
-        <Seg
-          label="Choose a detail"
-          mode="tabs"
-          idBase="pkg"
-          options={PACKAGES.map((p) => ({ value: p.id, label: p.short }))}
-          value={id}
-          onChange={setId}
-          className="max-w-[460px]"
-        />
+    <div>
+      {/* The control sits above both columns, so on a phone it comes before the photo it changes. */}
+      <Seg
+        label="Choose a detail"
+        mode="tabs"
+        idBase="pkg"
+        options={PACKAGES.map((p) => ({ value: p.id, label: p.short }))}
+        value={id}
+        onChange={setId}
+        className="max-w-[460px]"
+      />
 
-        <div className="stack mt-10">
+      <div className="mt-8 grid gap-8 lg:mt-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.78fr)] lg:gap-16 xl:gap-24">
+        <div className="stack">
           {PACKAGES.map((p) => {
             const on = p.id === id;
             return (
@@ -69,21 +70,21 @@ export default function PackagePicker() {
             );
           })}
         </div>
-      </div>
 
-      <div className="stack order-first lg:order-none" aria-hidden="true">
-        {PACKAGES.map((p) => {
-          const set = photoSet(p.photo.slug, "t");
-          return (
-            <div key={p.id} className="frame aspect-[4/5] max-h-[72svh] lg:max-h-none" data-on={p.id === id}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={set.src} srcSet={set.srcSet} sizes="(min-width: 1024px) 40vw, 100vw" alt="" width={set.width} height={set.height} loading="lazy" decoding="async" />
-              {p.photo.credit ? (
-                <span className="credit absolute right-3 bottom-3 rounded-[3px] bg-black/55 px-2 py-1 text-white/85">Photo: {p.photo.credit}</span>
-              ) : null}
-            </div>
-          );
-        })}
+        <div className="stack order-first lg:order-none" aria-hidden="true">
+          {PACKAGES.map((p) => {
+            const set = photoSet(p.photo.slug, "t");
+            return (
+              <div key={p.id} className="frame aspect-[4/5] max-h-[72svh] lg:max-h-none" data-on={p.id === id}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={set.src} srcSet={set.srcSet} sizes="(min-width: 1024px) 40vw, 100vw" alt="" width={set.width} height={set.height} loading="lazy" decoding="async" />
+                {p.photo.credit ? (
+                  <span className="credit absolute right-3 bottom-3 rounded-[3px] bg-black/55 px-2 py-1 text-white/85">Photo: {p.photo.credit}</span>
+                ) : null}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

@@ -38,6 +38,9 @@ jobs:
           # The preview is noindex (layout.tsx and robots.ts key off this var).
           # At the domain cutover, remove this line and add public/CNAME.
           NEXT_PUBLIC_BASE_PATH: "/jakes-car-detailing"
+          # Lets a texted preview link unfurl with the share image. Remove with
+          # the line above at the cutover.
+          NEXT_PUBLIC_SHARE_ORIGIN: "https://nradachy-web.github.io/jakes-car-detailing"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

@@ -24,7 +24,9 @@ export default function PageHero({ title, lede, photo, desktopCut = "w", focus, 
     <section className="hero hero--sub on-dark">
       <div className="hero-photo">
         <picture>
+          <source media="(min-width: 1024px)" type="image/avif" srcSet={wide.avifSrcSet} sizes="58vw" />
           <source media="(min-width: 1024px)" srcSet={wide.srcSet} sizes="58vw" />
+          <source type="image/avif" srcSet={tall.avifSrcSet} sizes="100vw" />
           <img
             src={tall.src}
             srcSet={tall.srcSet}
