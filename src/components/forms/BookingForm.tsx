@@ -7,15 +7,20 @@ import { BRAND, SERVICE_OPTIONS } from "@/lib/constants";
 /**
  * Booking request form.
  *
- * With a Web3Forms access key (NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY, set as a repo
- * variable) the request is emailed to Jake and the visitor lands on
- * /thank-you/. Without a key, or if the send fails, the form never pretends:
- * it hands the visitor the same request as a ready-to-send text or email to
- * Jake's own number and inbox. Web3Forms can report success for a dead key, so
- * a real test submission has to be confirmed by Jake before launch.
+ * A request goes two places at once: Jake's booking desk, which saves it
+ * (NEXT_PUBLIC_DESK_INTAKE_URL and _TOKEN), and an email copy through
+ * Web3Forms (NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY). If either lands, the visitor
+ * goes to /thank-you/. If both fail, or neither is configured, the form never
+ * pretends: it hands the visitor the same request as a ready-to-send text or
+ * email to Jake's own number and inbox. Web3Forms can report success for a
+ * dead key, which is one reason the desk copy exists.
  */
 
 const KEY = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || "";
+// Jake's booking desk. The token only says which shop the request is for; it
+// is public by nature, and the desk itself checks where the request came from.
+const DESK_URL = process.env.NEXT_PUBLIC_DESK_INTAKE_URL || "";
+const DESK_TOKEN = process.env.NEXT_PUBLIC_DESK_INTAKE_TOKEN || "";
 
 const TIMES = ["Any time", "Morning", "Afternoon", "Evening"];
 
@@ -112,36 +117,65 @@ function Form({ initialService, today }: { initialService: string; today: string
     // Honeypot: a filled hidden field means a bot. Drop it silently.
     if ((form.elements.namedItem("botcheck") as HTMLInputElement | null)?.checked) return;
 
-    if (!KEY) {
+    if (!KEY && !DESK_URL) {
       setFailed(false);
       setStatus("handoff");
       return;
     }
 
     setStatus("sending");
-    try {
-      const res = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          access_key: KEY,
-          subject: `${quoted ? "Quote request" : "Booking request"}: ${f.name} (${serviceLabel(f.service)})`,
-          from_name: `${BRAND.name} website`,
-          name: f.name,
-          phone: f.phone,
-          email: f.email || undefined,
-          vehicle: f.vehicle,
-          service: serviceLabel(f.service),
-          preferred_day: f.date ? prettyDate(f.date) : "No day given",
-          preferred_time: f.time,
-          notes: f.notes || "None",
-          message,
-        }),
-      });
-      const data = await res.json().catch(() => null);
-      if (!res.ok || !data?.success) throw new Error("send failed");
+    // Two independent deliveries, sent together: Jake's booking desk (which
+    // saves the request) and an email copy through Web3Forms. Either one
+    // landing counts. Only when both fail does the visitor get the handoff.
+    const toDesk: Promise<boolean> = DESK_URL
+      ? fetch(DESK_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            token: DESK_TOKEN,
+            name: f.name,
+            phone: f.phone,
+            email: f.email,
+            vehicle: f.vehicle,
+            service: f.service,
+            day: f.date,
+            time: f.time,
+            notes: f.notes,
+          }),
+        })
+          .then((res) => (res.ok ? res.json() : null))
+          .then((data) => Boolean(data?.ok))
+          .catch(() => false)
+      : Promise.resolve(false);
+
+    const toEmail: Promise<boolean> = KEY
+      ? fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            access_key: KEY,
+            subject: `${quoted ? "Quote request" : "Booking request"}: ${f.name} (${serviceLabel(f.service)})`,
+            from_name: `${BRAND.name} website`,
+            name: f.name,
+            phone: f.phone,
+            email: f.email || undefined,
+            vehicle: f.vehicle,
+            service: serviceLabel(f.service),
+            preferred_day: f.date ? prettyDate(f.date) : "No day given",
+            preferred_time: f.time,
+            notes: f.notes || "None",
+            message,
+          }),
+        })
+          .then((res) => (res.ok ? res.json() : null))
+          .then((data) => Boolean(data?.success))
+          .catch(() => false)
+      : Promise.resolve(false);
+
+    const [saved, emailed] = await Promise.all([toDesk, toEmail]);
+    if (saved || emailed) {
       router.push("/thank-you/");
-    } catch {
+    } else {
       setFailed(true);
       setStatus("handoff");
     }

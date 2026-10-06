@@ -48,13 +48,19 @@ export default function PrivacyPage() {
 
             <h2>How your request reaches Jake</h2>
             <p>
-              When you send the form, it is delivered by email through a form processor called{" "}
+              When you send the form, your request is saved to Jake&rsquo;s booking desk, a private tool that only
+              Jake and the people who look after his website can open. A copy is also emailed to Jake through a form
+              processor called{" "}
               <a href="https://web3forms.com" target="_blank" rel="noopener" className="link">
                 Web3Forms
               </a>
-              , which passes your message on to Jake&rsquo;s inbox. If the form cannot send, it shows your request as a
-              ready-made text or email for you to send yourself, and this site keeps no copy. If you call, text or email
-              instead, your message goes straight to Jake&rsquo;s phone or inbox.
+              . If the form cannot send, it shows your request as a ready-made text or email for you to send yourself,
+              and nothing is saved. If you call, text or email instead, your message goes straight to Jake&rsquo;s phone
+              or inbox.
+            </p>
+            <p>
+              If you give an email address, Jake may use it to confirm your booking, remind you of it and thank you
+              afterwards. Those messages are about your booking only.
             </p>
 
             <h2>Tracking</h2>
