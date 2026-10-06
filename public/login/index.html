@@ -5,14 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sign in | Jake's Car Detailing</title>
     <meta name="robots" content="noindex, nofollow">
-    <meta http-equiv="refresh" content="0; url=https://shop-desk-nine.vercel.app/login">
+    <noscript><meta http-equiv="refresh" content="0; url=https://shop-desk-nine.vercel.app/login"></noscript>
     <style>
       body { margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px; background: #000; color: #fff; font: 17px/1.6 "Helvetica Neue", Arial, sans-serif; }
       a { color: #7fb2ff; }
     </style>
+    <script>
+      // Jake's way in to his booking desk. The desk is a separate app (it needs
+      // a server and a database, which this static site does not have), so this
+      // page hands over to it. It prefers desk.jakesdetailing.ca and uses the
+      // desk's original address until that name is live, so nothing here has to
+      // change on the day the DNS record is added.
+      (function () {
+        var preferred = "https://desk.jakesdetailing.ca/login";
+        var original = "https://shop-desk-nine.vercel.app/login";
+        var gone = false;
+        function go(url) {
+          if (gone) return;
+          gone = true;
+          location.replace(url);
+        }
+        var timer = setTimeout(function () { go(original); }, 2500);
+        try {
+          fetch(preferred, { mode: "no-cors", cache: "no-store" }).then(
+            function () { clearTimeout(timer); go(preferred); },
+            function () { clearTimeout(timer); go(original); }
+          );
+        } catch (e) {
+          clearTimeout(timer);
+          go(original);
+        }
+      })();
+    </script>
   </head>
   <body>
-    <!-- Jake's way in to his booking desk. The desk is a separate app (it needs a server and a database, which this static site does not have), so this page hands over to it. If the desk moves to desk.jakesdetailing.ca, change the two addresses here. -->
     <p>Taking you to the desk. <a href="https://shop-desk-nine.vercel.app/login">Sign in here</a> if nothing happens.</p>
   </body>
 </html>
