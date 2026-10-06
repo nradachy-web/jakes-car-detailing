@@ -5,6 +5,7 @@ import { useState, useSyncExternalStore } from "react";
 import Seg from "@/components/ui/Seg";
 import { BOOK_HREF, PACKAGES, type PackageId } from "@/lib/constants";
 import { photoSet } from "@/lib/photos";
+import { cn } from "@/lib/utils";
 
 /**
  * The three priced details behind one control. Switching tabs swaps the price,
@@ -32,7 +33,7 @@ export default function PackagePicker() {
       />
 
       <div className="mt-8 grid gap-8 lg:mt-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.78fr)] lg:gap-16 xl:gap-24">
-        <div className="stack">
+        <div className="stack stack-text">
           {PACKAGES.map((p) => {
             const on = p.id === id;
             return (
@@ -49,10 +50,12 @@ export default function PackagePicker() {
                   <p className="figure text-[clamp(4.5rem,9vw,7.5rem)]">
                     <span className="sr-only">Price: </span>${p.price}
                   </p>
-                  <p className="muted pb-2 text-[0.9375rem] leading-snug">
+                  <p className="muted basis-full text-[0.9375rem] leading-snug sm:basis-auto sm:pb-2">
                     Canadian dollars
-                    <br />
-                    About {p.duration}
+                    <br className="hidden sm:block" />
+                    <span className="sm:hidden">, </span>
+                    <span className="sm:hidden">about {p.duration}</span>
+                    <span className="hidden sm:inline">About {p.duration}</span>
                   </p>
                 </div>
                 <p className="mt-7 max-w-[52ch]">{p.body}</p>
@@ -80,11 +83,24 @@ export default function PackagePicker() {
           {PACKAGES.map((p) => {
             const set = photoSet(p.photo.slug, "t");
             return (
-              <div key={p.id} className="frame aspect-[4/5] max-h-[72svh] lg:max-h-none" data-on={p.id === id}>
-                <picture>
-                  <source type="image/avif" srcSet={set.avifSrcSet} sizes="(min-width: 1024px) 40vw, 100vw" />
-                  <img src={set.src} srcSet={set.srcSet} sizes="(min-width: 1024px) 40vw, 100vw" alt="" width={set.width} height={set.height} loading="lazy" decoding="async" />
-                </picture>
+              <div
+                key={p.id}
+                // Phones get the portrait, tablets a wide cut at full width, desktop the portrait column.
+                className={cn("frame aspect-[4/5] md:aspect-[16/9] lg:aspect-[4/5]", p.photo.small && "grid place-items-center bg-ink")}
+                data-on={p.id === id}
+              >
+                {p.photo.small ? (
+                  // A small source photo: shown inset at its own size, never stretched to the frame.
+                  <picture className="block w-[min(78%,420px)]">
+                    <source type="image/avif" srcSet={set.avifSrcSet} sizes="420px" />
+                    <img src={set.src} srcSet={set.srcSet} sizes="420px" alt="" width={set.width} height={set.height} loading="lazy" decoding="async" className="h-auto w-full rounded-[4px]" />
+                  </picture>
+                ) : (
+                  <picture>
+                    <source type="image/avif" srcSet={set.avifSrcSet} sizes="(min-width: 1024px) 40vw, 100vw" />
+                    <img src={set.src} srcSet={set.srcSet} sizes="(min-width: 1024px) 40vw, 100vw" alt="" width={set.width} height={set.height} loading="lazy" decoding="async" className="object-[50%_62%]" />
+                  </picture>
+                )}
                 {p.photo.credit ? (
                   <span className="credit absolute right-3 bottom-3 rounded-[3px] bg-black/55 px-2 py-1 text-white/85">Photo: {p.photo.credit}</span>
                 ) : null}

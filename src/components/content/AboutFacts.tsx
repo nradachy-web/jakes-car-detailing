@@ -9,11 +9,11 @@ export default function AboutFacts() {
       <div className="wrap">
         <h2 className="d2">Where and when.</h2>
 
-        <dl className="mt-12 grid border-t border-white/14 md:grid-cols-2 lg:mt-16 lg:grid-cols-4">
+        <dl className="mt-12 grid border-t border-white/14 md:grid-cols-2 lg:mt-16 lg:grid-cols-[1.15fr_1.15fr_1.5fr_1fr]">
           <div className="border-b border-white/14 py-7 md:pr-8 lg:border-b-0">
             <dt className="label muted">Based in</dt>
             <dd className="d3 mt-3">
-              {BRAND.city}, {BRAND.regionName}
+              {BRAND.city}, <span className="whitespace-nowrap">{BRAND.regionName}</span>
             </dd>
             <dd className="mt-3">
               <a href={mapsUrl} target="_blank" rel="noopener" className="link">
@@ -23,7 +23,7 @@ export default function AboutFacts() {
           </div>
           <div className="border-b border-white/14 py-7 md:pr-8 lg:border-b-0 lg:border-l lg:pl-8">
             <dt className="label muted">Phone</dt>
-            <dd className="d3 mt-3 whitespace-nowrap">
+            <dd className="d3 mt-3 whitespace-nowrap lg:text-[clamp(1.25rem,1.9vw,2.1rem)]">
               <a href={`tel:${BRAND.phoneTel}`} className="transition-colors hover:text-sky">
                 {BRAND.phone}
               </a>
@@ -32,7 +32,7 @@ export default function AboutFacts() {
           </div>
           <div className="border-b border-white/14 py-7 md:pr-8 lg:border-b-0 lg:border-l lg:pl-8">
             <dt className="label muted">Email</dt>
-            <dd className="mt-3 text-[0.9688rem] font-semibold [overflow-wrap:anywhere]">
+            <dd className="d4 mt-4 [overflow-wrap:anywhere]">
               <a href={`mailto:${BRAND.email}`} className="transition-colors hover:text-sky">
                 {BRAND.email}
               </a>

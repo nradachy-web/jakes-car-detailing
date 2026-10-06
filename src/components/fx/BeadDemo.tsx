@@ -27,6 +27,9 @@ interface Drop {
   vy: number;
   ph: number; // phase for a little side-to-side wander
   flat: number; // 0..1, how far a bare-paint drop has spread
+  grip: number; // how much water this bead holds before it lets go (coated)
+  sq: number; // slight squash, so beads are not all perfect circles
+  left: number; // distance rolled since it last shed a droplet
 }
 
 const CAP = 760;
@@ -108,9 +111,9 @@ function dotSprite(size: number): HTMLCanvasElement {
   return c;
 }
 
-// The film layer runs at half the panel size: it is read back every frame to
+// The film layer runs below the panel's size: it is read back every frame to
 // find the edge of the water, and it is meant to look soft.
-const FILM = 2;
+const FILM = 1.5;
 const WET = 112; // wetness above which the paint shows as wet
 
 function BeadPanel({ mode, rinse, label }: { mode: Mode; rinse: number; label: string }) {
@@ -184,6 +187,19 @@ function BeadPanel({ mode, rinse, label }: { mode: Mode; rinse: number; label: s
     };
 
     const shown = (d: Drop, coated: boolean) => (coated ? d.r : d.r * (1 + 0.95 * d.flat));
+    // Beads differ: most let go early, some cling until they are large. That is
+    // what leaves a mix of sizes sitting on the panel after a rinse.
+    const fresh = (x: number, y: number, r: number): Drop => ({
+      x,
+      y,
+      r,
+      vy: 0,
+      ph: rand() * 6.283,
+      flat: 0,
+      grip: 0.8 + Math.pow(rand(), 2.2) * 1.5,
+      sq: 0.92 + rand() * 0.16,
+      left: 0,
+    });
 
     const addWater = (x: number, y: number, r: number, coated: boolean) => {
       const cap = (coated ? 22 : 30) * scale;
@@ -197,7 +213,7 @@ function BeadPanel({ mode, rinse, label }: { mode: Mode; rinse: number; label: s
           return;
         }
       }
-      if (drops.length < CAP) drops.push({ x, y, r, vy: 0, ph: rand() * 6.283, flat: 0 });
+      if (drops.length < CAP) drops.push(fresh(x, y, r));
     };
 
     const step = (dt: number) => {
@@ -225,10 +241,19 @@ function BeadPanel({ mode, rinse, label }: { mode: Mode; rinse: number; label: s
       for (let i = 0; i < drops.length; i++) {
         const d = drops[i];
         if (!coated) d.flat = Math.min(1, d.flat + dt * 1.7);
-        if (d.r > letGo) {
+        if (d.r > letGo * (coated ? d.grip : 1)) {
           if (coated) {
             d.vy += (620 + d.r * 70) * dt;
             d.vy *= 0.993;
+            // A rolling bead sheds small droplets behind it now and then.
+            d.left += d.vy * dt;
+            if (d.left > (46 + d.ph * 9) * scale && drops.length < CAP) {
+              d.left = 0;
+              const rr = (1.4 + rand() * 2.4) * scale;
+              const kid = fresh(d.x + gauss() * d.r * 0.5, d.y - d.r - rr - 2, rr);
+              kid.grip = 9; // it stays where it was left
+              drops.push(kid);
+            }
           } else {
             const target = 12 + (d.r - letGo) * 3;
             d.vy += (target - d.vy) * Math.min(1, dt * 2.2);
@@ -244,12 +269,12 @@ function BeadPanel({ mode, rinse, label }: { mode: Mode; rinse: number; label: s
       for (let i = 0; i < drops.length; i++) {
         const a = drops[i];
         if (a.r <= 0) continue;
-        const aMoving = a.r > letGo;
+        const aMoving = a.r > letGo * (coated ? a.grip : 1);
         const ra = shown(a, coated);
         for (let j = i + 1; j < drops.length; j++) {
           const b = drops[j];
           if (b.r <= 0) continue;
-          if (coated && !aMoving && b.r <= letGo) continue;
+          if (coated && !aMoving && b.r <= letGo * b.grip) continue;
           const reach = (ra + shown(b, coated)) * (coated ? 0.84 : 0.7);
           const dx = a.x - b.x;
           const dy = a.y - b.y;
@@ -259,6 +284,7 @@ function BeadPanel({ mode, rinse, label }: { mode: Mode; rinse: number; label: s
           const total = Math.sqrt(a.r * a.r + b.r * b.r);
           big.vy = Math.max(a.vy, b.vy);
           big.r = Math.min(cap, total);
+          big.grip = Math.min(big.grip, 2.3); // a shed droplet that grows can roll again
           small.r = 0;
           if (small === a) break;
         }
@@ -320,17 +346,35 @@ function BeadPanel({ mode, rinse, label }: { mode: Mode; rinse: number; label: s
         if (o) {
           const out = o.createImageData(fw, fh);
           const w = out.data;
+          const off = fw * 2 + 2; // two film pixels down and to the right
+          const last = wet.length - 1;
           for (let i = 0, p = 0; i < wet.length; i++, p += 4) {
             const v = wet[i];
             if (v <= WET - 22) continue;
             const t = v >= WET + 22 ? 1 : (v - (WET - 22)) / 44;
             const body = t * t * (3 - 2 * t);
-            const e = (v - (WET + 6)) / 30;
-            const rim = e > -1 && e < 1 ? 1 - e * e : 0;
-            w[p] = 150 + rim * 70;
-            w[p + 1] = 188 + rim * 48;
-            w[p + 2] = 255;
-            w[p + 3] = body * 40 + rim * 76;
+            // The lamp is up and to the left. Where the film's edge faces it the
+            // edge catches light; on the far side it throws a thin shadow.
+            const toward = wet[i - off < 0 ? 0 : i - off];
+            const away = wet[i + off > last ? last : i + off];
+            let lit = ((away - toward) / 255) * 2.6;
+            lit = lit > 1 ? 1 : lit < -1 ? -1 : lit;
+            if (lit > 0.04) {
+              w[p] = 214;
+              w[p + 1] = 232;
+              w[p + 2] = 255;
+              w[p + 3] = body * (30 + lit * 150);
+            } else if (lit < -0.04) {
+              w[p] = 6;
+              w[p + 1] = 14;
+              w[p + 2] = 38;
+              w[p + 3] = body * (30 - lit * 120);
+            } else {
+              w[p] = 140;
+              w[p + 1] = 182;
+              w[p + 2] = 250;
+              w[p + 3] = body * 30;
+            }
           }
           o.putImageData(out, 0, 0);
           ctx.imageSmoothingEnabled = true;
@@ -344,8 +388,9 @@ function BeadPanel({ mode, rinse, label }: { mode: Mode; rinse: number; label: s
           const d = drops[i];
           const s = d.r / 0.36; // the bead is 36% of its sprite, as a radius
           // A rolling bead stretches a little along its path.
-          const stretch = 1 + Math.min(0.35, d.vy / 1400);
-          ctx.drawImage(bead, d.x - s / 2, d.y - (s * stretch) / 2, s, s * stretch);
+          const stretch = (1 + Math.min(0.35, d.vy / 1400)) / d.sq;
+          const wide = s * d.sq;
+          ctx.drawImage(bead, d.x - wide / 2, d.y - (s * stretch) / 2, wide, s * stretch);
         }
       }
 

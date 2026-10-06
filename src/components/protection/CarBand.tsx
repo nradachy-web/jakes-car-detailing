@@ -1,6 +1,6 @@
 import Link from "next/link";
-import Photo from "@/components/ui/Photo";
-import { CARS, car } from "@/lib/photos";
+import CarTile from "@/components/content/CarTile";
+import { CARS } from "@/lib/photos";
 
 /**
  * A row of Jake's finished cars. Captions name the car and nothing else: none
@@ -16,18 +16,10 @@ export default function CarBand({ title, slugs }: { title: string; slugs: string
             See all {CARS.length} cars
           </Link>
         </div>
-        <ul className="mt-12 grid grid-cols-2 gap-x-3 gap-y-8 lg:mt-16 lg:grid-cols-4">
-          {slugs.map((slug) => {
-            const c = car(slug);
-            return (
-              <li key={slug}>
-                <figure>
-                  <Photo slug={slug} cut="w" alt={c.alt} sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-[4/3]" />
-                  <figcaption className="label mt-3">{c.name}</figcaption>
-                </figure>
-              </li>
-            );
-          })}
+        <ul className="mt-12 grid grid-cols-2 gap-2 md:gap-3 lg:mt-16 lg:grid-cols-4">
+          {slugs.map((slug) => (
+            <CarTile key={slug} slug={slug} cut="w" sizes="(min-width: 1024px) 25vw, 50vw" className="aspect-[4/3]" />
+          ))}
         </ul>
       </div>
     </section>

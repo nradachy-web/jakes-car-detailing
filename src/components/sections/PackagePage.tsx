@@ -259,15 +259,14 @@ function Band({ pkg, title, cars }: { pkg: DetailPackage; title: string; cars: s
   if (pkg.id === "interior") {
     return (
       <section className="on-dark section">
-        <div className="wrap grid gap-10 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.6fr)] lg:items-end lg:gap-16">
-          <div>
+        <div className="wrap">
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between md:gap-12">
             <h2 className="d2">{title}</h2>
-            <p className="lede muted mt-6">Some of the vehicles Jake has detailed in {BRAND.city}.</p>
-            <div className="mt-8 flex">{all}</div>
+            {all}
           </div>
-          <ul className="grid grid-cols-2 gap-2 md:gap-3">
+          <ul className="mt-12 grid grid-cols-2 gap-2 md:gap-3 lg:mt-16">
             {cars.map((slug) => (
-              <Tile key={slug} slug={slug} sizes="(min-width: 1024px) 32vw, 50vw" />
+              <Tile key={slug} slug={slug} sizes="50vw" />
             ))}
           </ul>
         </div>

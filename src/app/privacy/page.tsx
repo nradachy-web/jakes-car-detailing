@@ -85,7 +85,8 @@ export default function PrivacyPage() {
 
           <aside
             aria-labelledby="privacy-contact"
-            className="rounded-[6px] bg-white p-7 md:p-9 lg:sticky lg:top-[calc(var(--nav-h)+32px)] lg:self-start"
+            className="border-t pt-8 lg:sticky lg:top-[calc(var(--nav-h)+32px)] lg:self-start"
+            style={{ borderColor: "var(--fg)" }}
           >
             <h2 id="privacy-contact" className="d3">
               A question about your details?

@@ -121,7 +121,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             header.fixed { background: #000 !important; border-color: rgb(255 255 255 / 0.14) !important; }
             .acc-panel { grid-template-rows: 1fr !important; visibility: visible !important; }
             .stack { display: block !important; }
-            .stack > * { opacity: 1 !important; visibility: visible !important; margin-bottom: 40px; }
+            .stack > * { display: block !important; opacity: 1 !important; visibility: visible !important; margin-bottom: 40px; }
           `}</style>
         </noscript>
         <Navbar />

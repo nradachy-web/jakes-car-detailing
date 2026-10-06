@@ -242,7 +242,7 @@ export default function PaintCorrectionPage() {
 
       {/* The process, in order. */}
       <section className="on-spruce section">
-        <div className="wrap grid gap-12 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:gap-20 xl:gap-28">
+        <div className="wrap grid gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] lg:gap-16 xl:gap-24">
           <div className="lg:sticky lg:top-[calc(var(--nav-h)+32px)] lg:self-start">
             <h2 className="d2">How a correction usually goes.</h2>
             <p className="lede muted mt-6">

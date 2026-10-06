@@ -4,7 +4,7 @@ import { BOOK_HREF, BRAND, HOURS, PACKAGES, QUOTED } from "@/lib/constants";
 
 export default function Footer() {
   return (
-    <footer className="on-dark border-t border-white/14 pb-[96px] lg:pb-0">
+    <footer className="on-dark border-t border-white/14 pb-[96px] sm:pb-0">
       <div className="wrap grid gap-x-10 gap-y-12 py-16 md:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1.1fr] lg:py-20">
         <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}

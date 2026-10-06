@@ -7,7 +7,8 @@ import { cn } from "@/lib/utils";
 import { BOOK_HREF, BOOK_LABEL, BRAND } from "@/lib/constants";
 
 /**
- * Phone and tablet only: call and book, always one thumb away. It waits until
+ * Phones only: call and book, always one thumb away. From 640px the header
+ * already carries the Book button. It waits until
  * the hero's own buttons have scrolled off, and stays out of the way on the
  * booking page, where the form is the point.
  */
@@ -28,7 +29,7 @@ export default function StickyBar() {
     <div
       data-sticky-bar
       className={cn(
-        "on-dark fixed inset-x-0 bottom-0 z-40 border-t border-white/14 bg-black transition-transform duration-300 lg:hidden",
+        "on-dark fixed inset-x-0 bottom-0 z-40 border-t border-white/14 bg-black transition-transform duration-300 sm:hidden",
         show ? "translate-y-0" : "translate-y-full",
       )}
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}

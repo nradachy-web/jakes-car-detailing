@@ -50,10 +50,10 @@
     color-scheme: dark;
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: calc(var(--nav-h) + 16px);
-    /* Room for the sticky call bar on phones and tablets. */
+    /* Room for the sticky call bar on phones. */
     scroll-padding-bottom: 88px;
   }
-  @media (min-width: 1024px) {
+  @media (min-width: 640px) {
     html {
       scroll-padding-bottom: 0;
     }
@@ -425,6 +425,16 @@
   }
   .hero--sub .hero-photo {
     max-height: 58svh;
+    -webkit-mask-image: linear-gradient(to top, transparent 0, #000 22%);
+    mask-image: linear-gradient(to top, transparent 0, #000 22%);
+  }
+  .hero--sub .hero-photo::after {
+    background:
+      linear-gradient(to bottom, rgb(0 0 0 / 0.72) 0, rgb(0 0 0 / 0) calc(var(--nav-h) + 64px)),
+      linear-gradient(to top, rgb(0 0 0 / 0.88) 0, rgb(0 0 0 / 0.5) 16%, rgb(0 0 0 / 0) 40%);
+  }
+  .hero--sub .hero-copy {
+    margin-top: -56px;
   }
   @media (min-width: 1024px) {
     .hero--sub {
@@ -433,6 +443,18 @@
     .hero--sub .hero-photo {
       width: 58%;
       max-height: none;
+      -webkit-mask-image: linear-gradient(to right, transparent 2%, #000 46%), linear-gradient(to top, transparent 0, #000 26%);
+      -webkit-mask-composite: source-in;
+      mask-image: linear-gradient(to right, transparent 2%, #000 46%), linear-gradient(to top, transparent 0, #000 26%);
+      mask-composite: intersect;
+    }
+    .hero--sub .hero-photo::after {
+      background:
+        linear-gradient(to bottom, rgb(0 0 0 / 0.72) 0, rgb(0 0 0 / 0) calc(var(--nav-h) + 64px)),
+        linear-gradient(to right, rgb(0 0 0 / 0.66) 0, rgb(0 0 0 / 0) 56%);
+    }
+    .hero--sub .hero-copy {
+      margin-top: 0;
     }
     .hero--sub .hero-copy {
       padding-bottom: clamp(56px, 9vh, 104px);
@@ -537,6 +559,24 @@
     opacity: 0;
     visibility: hidden;
   }
+  /* Text panels: the old one leaves before the new one arrives, so prices never overprint. */
+  .stack-text > [data-on="false"] {
+    transition:
+      opacity 0.12s ease,
+      visibility 0.12s;
+  }
+  .stack-text > [data-on="true"] {
+    transition:
+      opacity 0.26s ease 0.1s,
+      visibility 0s 0.1s;
+  }
+  /* Below the two-column layout a stack would reserve the tallest panel's
+     height as blank ground. Show only the active one there. */
+  @media (max-width: 1023px) {
+    .stack-text > [data-on="false"] {
+      display: none;
+    }
+  }
 
   /* ---------- Accordion ---------- */
   .acc-panel {
@@ -587,6 +627,15 @@
   @media (min-width: 768px) {
     .paint {
       aspect-ratio: 16 / 10;
+    }
+  }
+  /* On a laptop the panel and its controls have to share one screen. */
+  @media (min-width: 1024px) {
+    .paint {
+      /* Explicit width: otherwise the height cap is passed through the ratio and narrows the panel. */
+      width: 100%;
+      aspect-ratio: 2 / 1;
+      max-height: min(62svh, 620px);
     }
   }
   .paint canvas {

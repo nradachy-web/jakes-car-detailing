@@ -17,15 +17,15 @@ export default function UnderTheLight() {
 
         <SwirlDemo className="mt-12 lg:mt-16" />
 
-        <div className="mt-14 grid gap-3 md:grid-cols-2 lg:mt-20">
-          {QUOTED.map((q) => (
+        <div className="mt-14 grid border-t border-white/14 md:grid-cols-2 lg:mt-20">
+          {QUOTED.map((q, i) => (
             <Link
               key={q.id}
               href={q.slug}
-              className="group flex flex-col rounded-[6px] border border-white/14 p-7 transition-colors hover:border-white/40 md:p-9"
+              className={`group flex flex-col border-b border-white/14 py-9 md:border-b-0 md:py-10 ${i === 0 ? "md:pr-12" : "md:border-l md:border-white/14 md:pl-12"}`}
             >
               <span className="label text-sky">New at Jake&rsquo;s</span>
-              <span className="d3 mt-4">{q.name}</span>
+              <span className="d3 mt-4 transition-colors group-hover:text-sky">{q.name}</span>
               <span className="muted mt-3 max-w-[40ch]">{q.line}</span>
               <span className="link mt-8 self-start">{QUOTE_LABEL}</span>
             </Link>

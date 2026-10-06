@@ -97,7 +97,8 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
             {/* Beside the text on desktop, after it on a phone. */}
             <aside
               aria-labelledby="post-cta"
-              className="rounded-[6px] bg-white p-7 md:p-9 lg:sticky lg:top-[calc(var(--nav-h)+32px)] lg:self-start"
+              className="border-t pt-8 lg:sticky lg:top-[calc(var(--nav-h)+32px)] lg:self-start"
+              style={{ borderColor: "var(--fg)" }}
             >
               <h2 id="post-cta" className="d3">
                 Have Jake look after it.

@@ -65,7 +65,7 @@ export interface DetailPackage {
   line: string; // one-line summary
   body: string; // his description, lightly edited
   includes: string[];
-  photo: { slug: string; alt: string; credit?: string };
+  photo: { slug: string; alt: string; credit?: string; small?: boolean };
 }
 
 export const PACKAGES: DetailPackage[] = [
@@ -75,7 +75,7 @@ export const PACKAGES: DetailPackage[] = [
     short: "Exterior",
     name: "Premium Exterior Detailing",
     price: 100,
-    duration: "1 hr 30 min",
+    duration: "1\u00a0hr\u00a030\u00a0min",
     line: "A safe hand wash and a full decontamination, dried by hand.",
     body: "A full snow foam pre-wash, a safe two-bucket hand wash, wheel and tire cleaning, and a complete exterior decontamination to remove dirt and road grime. Then the vehicle is carefully dried with premium microfiber towels, leaving a clean, glossy finish.",
     includes: [
@@ -85,7 +85,7 @@ export const PACKAGES: DetailPackage[] = [
       "Exterior decontamination",
       "Microfiber hand dry",
     ],
-    photo: { slug: "bmw-e46", alt: "A grey BMW coupe on a wet driveway" },
+    photo: { slug: "mercedes-glc", alt: "A silver Mercedes-Benz GLC on a driveway, suds still on the ground" },
   },
   {
     id: "interior",
@@ -93,11 +93,12 @@ export const PACKAGES: DetailPackage[] = [
     short: "Interior",
     name: "Premium Interior Detailing",
     price: 150,
-    duration: "1 hr",
+    duration: "1\u00a0hr",
     line: "A deep clean for the cabin, from the carpets to the dash.",
     body: "A deep clean for your vehicle's interior: vacuuming, upholstery cleaning and dashboard polishing, done with premium products.",
     includes: ["Interior vacuum", "Upholstery cleaning", "Dashboard polishing"],
-    photo: { slug: "granturismo-interior", alt: "The red leather interior of a Maserati GranTurismo" },
+    // 514px source: shown inset at no more than 420px, never stretched to the frame.
+    photo: { slug: "granturismo-interior", alt: "The red leather interior of a Maserati GranTurismo", small: true },
   },
   {
     id: "full",
@@ -105,7 +106,7 @@ export const PACKAGES: DetailPackage[] = [
     short: "Full detail",
     name: "Premium Full Detail",
     price: 200,
-    duration: "3 hr",
+    duration: "3\u00a0hr",
     line: "Inside and out, in one appointment.",
     body: "A complete interior and exterior detail, leaving every part of your vehicle professionally cleaned and restored to a pristine finish.",
     includes: ["Complete exterior detail", "Complete interior detail"],

@@ -161,6 +161,17 @@ export default function PaintPanel({ level, label }: Props) {
       ctx.fillStyle = bloom;
       ctx.fillRect(0, 0, W, H);
 
+      // Corrected paint has depth: a wide, saturated pool of colour under the lamp
+      // that swirled paint scatters away.
+      if (clean > 0.02) {
+        const depth = ctx.createRadialGradient(lx, ly, 0, lx, ly, reach * 1.7);
+        depth.addColorStop(0, `rgba(24,86,235,${0.34 * clean})`);
+        depth.addColorStop(0.35, `rgba(14,58,190,${0.2 * clean})`);
+        depth.addColorStop(1, "rgba(6,24,110,0)");
+        ctx.fillStyle = depth;
+        ctx.fillRect(0, 0, W, H);
+      }
+
       // Flake sparkles near the light: the flake layer, masked to a soft disc.
       if (flakes && mask) {
         const size = mask.width;
@@ -222,10 +233,40 @@ export default function PaintPanel({ level, label }: Props) {
       }
 
       // The lamp itself, reflected: a soft blob on swirled paint, a hard point when clean.
-      const coreR = 46 - 26 * clean;
+      // Sized to the panel, so a phone does not get a lamp a quarter of its height.
+      const k = Math.max(0.42, Math.min(1.15, Math.min(W, H) / 560));
+
+      if (clean > 0.02) {
+        // The lamp's long reflection: only clear paint holds a line this sharp.
+        ctx.save();
+        ctx.translate(lx, ly);
+        ctx.rotate(-0.2);
+        const len = reach * 1.5;
+        const streak = ctx.createLinearGradient(-len, 0, len, 0);
+        streak.addColorStop(0, "rgba(150,195,255,0)");
+        streak.addColorStop(0.5, `rgba(215,232,255,${0.55 * clean})`);
+        streak.addColorStop(1, "rgba(150,195,255,0)");
+        ctx.fillStyle = streak;
+        ctx.fillRect(-len, -1.1 * k, len * 2, 2.2 * k);
+        const soft = ctx.createLinearGradient(-len * 0.7, 0, len * 0.7, 0);
+        soft.addColorStop(0, "rgba(90,150,255,0)");
+        soft.addColorStop(0.5, `rgba(90,150,255,${0.16 * clean})`);
+        soft.addColorStop(1, "rgba(90,150,255,0)");
+        ctx.fillStyle = soft;
+        ctx.fillRect(-len * 0.7, -7 * k, len * 1.4, 14 * k);
+        ctx.restore();
+        // A fine halo ring around the lamp.
+        ctx.strokeStyle = `rgba(190,218,255,${0.3 * clean})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(lx, ly, (20 + 22 * clean) * k * 1.9, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      const coreR = (46 - 26 * clean) * k;
       const core = ctx.createRadialGradient(lx, ly, 0, lx, ly, coreR);
       core.addColorStop(0, "rgba(255,255,255,1)");
-      core.addColorStop(0.18 + 0.3 * clean, `rgba(235,244,255,${0.75 + 0.2 * clean})`);
+      core.addColorStop(0.18 + 0.52 * clean, `rgba(235,244,255,${0.75 + 0.25 * clean})`);
       core.addColorStop(1, "rgba(170,205,255,0)");
       ctx.fillStyle = core;
       ctx.beginPath();

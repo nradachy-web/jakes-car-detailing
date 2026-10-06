@@ -58,7 +58,7 @@ export default function PageHero({ title, lede, photo, desktopCut = "w", focus, 
       </div>
 
       {photo.credit ? (
-        <p className="credit pointer-events-none absolute right-[var(--gutter)] top-[calc(var(--nav-h)+10px)] hidden text-white/60 lg:block">
+        <p className="credit pointer-events-none absolute right-[max(var(--gutter),calc((100vw-1320px)/2))] top-[calc(var(--nav-h)+10px)] hidden text-white/60 lg:block">
           Photo: {photo.credit}
         </p>
       ) : null}

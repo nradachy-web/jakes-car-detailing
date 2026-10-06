@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CARS, car, photoSet } from "@/lib/photos";
 import { cn } from "@/lib/utils";
 
-const TILES = ["huracan", "audi-r8", "granturismo", "cybertruck", "bmw-m4", "corvette-c5", "defender", "bmw-e46", "audi-rs3"];
+const TILES = ["huracan", "audi-r8", "granturismo", "cybertruck", "bmw-m4", "corvette-c5", "defender", "range-rover-sport", "audi-rs3"];
 
 /** Nine of Jake's finished cars, the Huracán at double size. Captions name the car. */
 export default function Lineup() {
