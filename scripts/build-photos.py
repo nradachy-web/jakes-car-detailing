@@ -174,6 +174,10 @@ def logo():
     all_x = [cols(*b) for b in bands]
     full = transparent((min(a for a, _ in all_x), bands[0][0], max(b for _, b in all_x), bands[-1][1]), 10)
     full.save(BRAND / "logo-full.png", optimize=True)
+    # The footer shows it 230px wide: 690px covers 3x screens at a fraction of the PNG.
+    full.resize((690, int(round(full.height * 690 / full.width))), Image.LANCZOS).save(
+        BRAND / "logo-full-690.webp", "WEBP", quality=90, method=6
+    )
     print("lockup", lockup.size, "full", full.size)
 
     # Favicon: the J of JAKE'S on black. The lettering is italic, so the J

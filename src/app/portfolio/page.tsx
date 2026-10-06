@@ -39,7 +39,7 @@ export default function PortfolioPage() {
             Call {BRAND.phone}
           </a>
         </div>
-        <GoogleRating className="mt-8 text-white transition-colors hover:text-sky" />
+        <GoogleRating className="mt-5 text-white transition-colors hover:text-sky" />
       </PageHero>
 
       <section className="on-spruce section">

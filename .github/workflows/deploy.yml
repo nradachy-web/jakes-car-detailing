@@ -34,13 +34,13 @@ jobs:
         run: npm run build
         env:
           NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ vars.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY }}
-          # Preview build for https://nradachy-web.github.io/jakes-car-detailing/.
-          # The preview is noindex (layout.tsx and robots.ts key off this var).
-          # At the domain cutover, remove this line and add public/CNAME.
+          # preview-start (scripts/go-live.sh removes this block at the domain cutover)
+          # Builds for https://nradachy-web.github.io/jakes-car-detailing/. The
+          # base path also keeps the preview out of search (layout.tsx, robots.ts).
           NEXT_PUBLIC_BASE_PATH: "/jakes-car-detailing"
-          # Lets a texted preview link unfurl with the share image. Remove with
-          # the line above at the cutover.
+          # Lets a texted preview link unfurl with the share image.
           NEXT_PUBLIC_SHARE_ORIGIN: "https://nradachy-web.github.io/jakes-car-detailing"
+          # preview-end
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

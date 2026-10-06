@@ -34,7 +34,7 @@ export default function CarTile({
         decoding="async"
         className="transition-transform duration-700 ease-out group-hover:scale-[1.035]"
       />
-      <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-3 pt-10 pb-2.5 md:px-4 md:pb-3.5">
+      <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-3 pt-10 pb-2.5 md:px-4 md:pb-3.5">
         <span className={cn("label block text-white", large ? "text-[1rem] md:text-[1.125rem]" : "text-[0.8125rem] md:text-[0.875rem]")}>
           {c.name}
         </span>

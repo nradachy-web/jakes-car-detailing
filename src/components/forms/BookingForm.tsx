@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useMemo, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { BRAND, SERVICE_OPTIONS } from "@/lib/constants";
 
 /**
@@ -83,6 +83,22 @@ function Form({ initialService, today }: { initialService: string; today: string
   const [f, setF] = useState<Fields>({ ...EMPTY, service: initialService });
   const [status, setStatus] = useState<Status>("idle");
   const [failed, setFailed] = useState(false);
+  const handoffRef = useRef<HTMLHeadingElement>(null);
+  const serviceRef = useRef<HTMLSelectElement>(null);
+  const wasHandoff = useRef(false);
+
+  // The handoff panel replaces the form in place. Bring it into view and move
+  // focus to its heading; coming back, return focus to the first field.
+  useEffect(() => {
+    if (status === "handoff") {
+      wasHandoff.current = true;
+      handoffRef.current?.focus({ preventScroll: true });
+      handoffRef.current?.scrollIntoView({ block: "start" });
+    } else if (status === "idle" && wasHandoff.current) {
+      wasHandoff.current = false;
+      serviceRef.current?.focus();
+    }
+  }, [status]);
 
   const set = (key: keyof Fields) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) =>
     setF((prev) => ({ ...prev, [key]: e.target.value }));
@@ -136,7 +152,9 @@ function Form({ initialService, today }: { initialService: string; today: string
     const mail = `mailto:${BRAND.email}?subject=${encodeURIComponent(`${quoted ? "Quote request" : "Booking request"}: ${serviceLabel(f.service)}`)}&body=${encodeURIComponent(message)}`;
     return (
       <div role="status" aria-live="polite">
-        <h3 className="d3">{failed ? "That didn’t send. Your request is ready to go another way." : "Your request is ready. Send it straight to Jake."}</h3>
+        <h3 ref={handoffRef} tabIndex={-1} className="d3 scroll-mt-[calc(var(--nav-h)+24px)] outline-none">
+          {failed ? "That didn’t send. Your request is ready to go another way." : "Your request is ready. Send it straight to Jake."}
+        </h3>
         <p className="muted mt-4 max-w-[52ch]">
           {failed
             ? "The form could not reach Jake just now. Nothing was lost: send the same details by text or email in one tap."
@@ -165,11 +183,17 @@ function Form({ initialService, today }: { initialService: string; today: string
 
   return (
     <form onSubmit={onSubmit} className="grid gap-5">
+      <noscript>
+        <p className="rounded-[4px] border p-4" style={{ borderColor: "var(--line)" }}>
+          This form needs JavaScript to send. Call or text <a href={`tel:${BRAND.phoneTel}`}>{BRAND.phone}</a>, or email{" "}
+          <a href={`mailto:${BRAND.email}`}>{BRAND.email}</a>, and Jake will take it from there.
+        </p>
+      </noscript>
       <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 
       <div className="field">
         <label htmlFor="bf-service">What would you like done?</label>
-        <select id="bf-service" name="service" required value={f.service} onChange={set("service")} className="input">
+        <select ref={serviceRef} id="bf-service" name="service" required value={f.service} onChange={set("service")} className="input">
           <option value="" disabled>
             Choose a service
           </option>
@@ -185,7 +209,7 @@ function Form({ initialService, today }: { initialService: string; today: string
         <label htmlFor="bf-vehicle">
           Your vehicle <span className="hint">(year, make and model)</span>
         </label>
-        <input id="bf-vehicle" name="vehicle" required value={f.vehicle} onChange={set("vehicle")} autoComplete="off" placeholder="2021 Audi RS 3" className="input" />
+        <input id="bf-vehicle" name="vehicle" required pattern=".*\S.*" title="Year, make and model" value={f.vehicle} onChange={set("vehicle")} autoComplete="off" placeholder="2021 Audi RS 3" className="input" />
       </div>
 
       <div className="grid gap-5 sm:grid-cols-2">
@@ -208,11 +232,11 @@ function Form({ initialService, today }: { initialService: string; today: string
       <div className="grid gap-5 sm:grid-cols-2">
         <div className="field">
           <label htmlFor="bf-name">Your name</label>
-          <input id="bf-name" name="name" required value={f.name} onChange={set("name")} autoComplete="name" className="input" />
+          <input id="bf-name" name="name" required pattern=".*\S.*" title="Your name" value={f.name} onChange={set("name")} autoComplete="name" className="input" />
         </div>
         <div className="field">
           <label htmlFor="bf-phone">Phone</label>
-          <input id="bf-phone" name="phone" type="tel" required value={f.phone} onChange={set("phone")} autoComplete="tel" inputMode="tel" className="input" />
+          <input id="bf-phone" name="phone" type="tel" required pattern="[^0-9]*([0-9][^0-9]*){7,}" title="A phone number with at least seven digits" value={f.phone} onChange={set("phone")} autoComplete="tel" inputMode="tel" className="input" />
         </div>
       </div>
 

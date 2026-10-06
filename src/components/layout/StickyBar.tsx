@@ -26,6 +26,7 @@ export default function StickyBar() {
 
   return (
     <div
+      data-sticky-bar
       className={cn(
         "on-dark fixed inset-x-0 bottom-0 z-40 border-t border-white/14 bg-black transition-transform duration-300 lg:hidden",
         show ? "translate-y-0" : "translate-y-full",

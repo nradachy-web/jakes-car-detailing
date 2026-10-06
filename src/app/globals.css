@@ -50,6 +50,13 @@
     color-scheme: dark;
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: calc(var(--nav-h) + 16px);
+    /* Room for the sticky call bar on phones and tablets. */
+    scroll-padding-bottom: 88px;
+  }
+  @media (min-width: 1024px) {
+    html {
+      scroll-padding-bottom: 0;
+    }
   }
   @media (prefers-reduced-motion: no-preference) {
     html {
@@ -99,9 +106,11 @@
     outline-offset: 3px;
     border-radius: 2px;
   }
+  /* Not currentColor: a blue button's text is white, which vanishes on the
+     light ground, and the white button's text is blue, which vanishes on blue. */
   .on-light :focus-visible,
   .on-blue :focus-visible {
-    outline-color: currentColor;
+    outline-color: var(--fg);
   }
 
   ::selection {
@@ -330,6 +339,17 @@
     object-fit: cover;
     object-position: 50% 30%;
   }
+  /* Shade where type sits on the photo: under the clear header, and under
+     the headline that overlaps the photo's foot on phones. */
+  .hero-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(to bottom, rgb(0 0 0 / 0.72) 0, rgb(0 0 0 / 0) calc(var(--nav-h) + 64px)),
+      linear-gradient(to top, rgb(0 0 0 / 0.9) 0, rgb(0 0 0 / 0.62) 24%, rgb(0 0 0 / 0) 58%);
+  }
   .hero-sweep,
   .hero-light {
     position: absolute;
@@ -378,6 +398,11 @@
     }
     .hero-photo img {
       object-position: 50% 44%;
+    }
+    .hero-photo::after {
+      background:
+        linear-gradient(to bottom, rgb(0 0 0 / 0.72) 0, rgb(0 0 0 / 0) calc(var(--nav-h) + 64px)),
+        linear-gradient(to right, rgb(0 0 0 / 0.66) 0, rgb(0 0 0 / 0) 56%);
     }
     .hero-copy {
       margin-top: 0;
@@ -590,7 +615,7 @@
     width: 100%;
     min-height: 52px;
     padding: 12px 14px;
-    border: 1px solid color-mix(in srgb, var(--fg) 30%, transparent);
+    border: 1px solid color-mix(in srgb, var(--fg) 55%, transparent);
     border-radius: 4px;
     background: var(--raised);
     color: var(--fg);
@@ -602,10 +627,11 @@
       box-shadow 0.18s ease;
   }
   .input::placeholder {
-    color: color-mix(in srgb, var(--fg) 46%, transparent);
+    color: var(--muted);
+    opacity: 1;
   }
   .input:hover {
-    border-color: color-mix(in srgb, var(--fg) 55%, transparent);
+    border-color: var(--fg);
   }
   .input:focus-visible {
     outline: none;
@@ -681,6 +707,17 @@
   }
   .draw-line {
     transform-origin: left center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seg-thumb,
+  .acc-panel,
+  .acc-icon::before,
+  .acc-icon::after,
+  .stack > *,
+  .hero-light {
+    transition: none;
   }
 }
 

@@ -114,6 +114,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
+        {/* Without JavaScript the header cannot turn solid, accordions cannot
+            open and the package tabs cannot switch. Show all of it instead. */}
+        <noscript>
+          <style>{`
+            header.fixed { background: #000 !important; border-color: rgb(255 255 255 / 0.14) !important; }
+            .acc-panel { grid-template-rows: 1fr !important; visibility: visible !important; }
+            .stack { display: block !important; }
+            .stack > * { opacity: 1 !important; visibility: visible !important; margin-bottom: 40px; }
+          `}</style>
+        </noscript>
         <Navbar />
         <main id="main" tabIndex={-1} className="outline-none">
           {children}

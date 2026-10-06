@@ -16,7 +16,7 @@ export default function BookBand({
         <h2 className="d2">{title}</h2>
         <a
           href={`tel:${BRAND.phoneTel}`}
-          className="figure mt-8 block w-fit whitespace-nowrap text-[clamp(2.1rem,8.3vw,8rem)] underline decoration-white/0 decoration-[3px] underline-offset-[0.12em] transition-[text-decoration-color] duration-300 hover:decoration-white"
+          className="figure mt-8 block w-fit whitespace-nowrap text-[clamp(1.75rem,8.3vw,8rem)] underline decoration-white/0 decoration-[3px] underline-offset-[0.12em] transition-[text-decoration-color] duration-300 hover:decoration-white"
         >
           {BRAND.phone}
         </a>

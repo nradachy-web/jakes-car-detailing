@@ -22,7 +22,7 @@ export function GoogleRating({ className }: { className?: string }) {
       href={mapsUrl}
       target="_blank"
       rel="noopener"
-      className={cn("group inline-flex flex-wrap items-center gap-x-3 gap-y-1", className)}
+      className={cn("group inline-flex min-h-11 flex-wrap items-center gap-x-3 gap-y-1", className)}
     >
       <Stars className="text-[#f5b83d]" />
       <span className="label">

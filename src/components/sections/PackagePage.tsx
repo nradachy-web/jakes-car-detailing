@@ -94,7 +94,7 @@ function copyFor(pkg: DetailPackage): PageCopy {
 
 function PriceFigure({ pkg, className }: { pkg: DetailPackage; className?: string }) {
   return (
-    <div className={cn("flex items-end gap-6", className)}>
+    <div className={cn("flex flex-wrap items-end gap-x-6 gap-y-2", className)}>
       <p className="figure text-[clamp(4.5rem,9vw,7.5rem)]">
         <span className="sr-only">Price: </span>${pkg.price}
       </p>
@@ -134,7 +134,7 @@ function Tile({ slug, sizes, big, className }: { slug: string; sizes: string; bi
     <li className={cn("frame aspect-[4/3]", className)}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={set.src} srcSet={set.srcSet} sizes={sizes} alt={c.alt} width={set.width} height={set.height} loading="lazy" decoding="async" />
-      <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent px-3 pt-10 pb-2.5 md:px-4 md:pb-3.5">
+      <span className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 to-transparent px-3 pt-10 pb-2.5 md:px-4 md:pb-3.5">
         <span className={cn("label block text-white", big ? "text-[1rem] md:text-[1.125rem]" : "text-[0.8125rem] md:text-[0.875rem]")}>{c.name}</span>
       </span>
     </li>
@@ -476,7 +476,7 @@ export default function PackagePage({ id }: { id: PackageId }) {
             Call {BRAND.phone}
           </a>
         </div>
-        <GoogleRating className="mt-8 text-white transition-colors hover:text-sky" />
+        <GoogleRating className="mt-5 text-white transition-colors hover:text-sky" />
       </PageHero>
 
       {pkg.id === "exterior" ? <ExteriorPrice pkg={pkg} heading={copy.heading} /> : null}

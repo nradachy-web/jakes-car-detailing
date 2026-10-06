@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Seg from "@/components/ui/Seg";
 import { BOOK_HREF, PACKAGES, type PackageId } from "@/lib/constants";
 import { photoSet } from "@/lib/photos";
@@ -10,8 +10,13 @@ import { photoSet } from "@/lib/photos";
  * The three priced details behind one control. Switching tabs swaps the price,
  * the time, what is included and the photograph in place.
  */
+const never = () => () => {};
+
 export default function PackagePicker() {
   const [id, setId] = useState<PackageId>("full");
+  // False in the static HTML, true once React is running. Without JavaScript
+  // the tabs cannot switch, so every panel has to stay readable and usable.
+  const live = useSyncExternalStore(never, () => true, () => false);
 
   return (
     <div>
@@ -37,10 +42,10 @@ export default function PackagePicker() {
                 role="tabpanel"
                 aria-labelledby={`pkg-tab-${p.id}`}
                 data-on={on}
-                inert={!on}
+                inert={live && !on}
               >
                 <h3 className="d3">{p.name}</h3>
-                <div className="mt-6 flex items-end gap-6">
+                <div className="mt-6 flex flex-wrap items-end gap-x-6 gap-y-2">
                   <p className="figure text-[clamp(4.5rem,9vw,7.5rem)]">
                     <span className="sr-only">Price: </span>${p.price}
                   </p>

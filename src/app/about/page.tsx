@@ -40,7 +40,7 @@ export default function AboutPage() {
             Call {BRAND.phone}
           </a>
         </div>
-        <GoogleRating className="mt-8 text-white transition-colors hover:text-sky" />
+        <GoogleRating className="mt-5 text-white transition-colors hover:text-sky" />
       </PageHero>
 
       {/* Jake's own words from his current site, edited for punctuation only. */}

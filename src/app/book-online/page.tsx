@@ -91,7 +91,7 @@ export default function BookOnline() {
             Tell Jake about your vehicle and when suits you. Paint correction and ceramic coating start with a free
             quote.
           </p>
-          <GoogleRating className="mt-7 text-white transition-colors hover:text-sky" />
+          <GoogleRating className="mt-4 text-white transition-colors hover:text-sky" />
         </div>
       </section>
 
@@ -104,7 +104,7 @@ export default function BookOnline() {
             </div>
           </div>
 
-          <aside className="lg:pt-1">
+          <div className="lg:pt-1">
             <h2 className="d3">Rather talk to Jake?</h2>
             <ul className="mt-6" style={{ borderTop: "1px solid var(--line)" }}>
               {[
@@ -152,7 +152,7 @@ export default function BookOnline() {
               ))}
             </dl>
             <p className="muted mt-3 text-[0.875rem]">Prices in Canadian dollars.</p>
-          </aside>
+          </div>
         </div>
       </section>
 

@@ -9,11 +9,12 @@ export default function Footer() {
         <div>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={asset("/brand/logo-full.png")}
+            src={asset("/brand/logo-full-690.webp")}
             alt={`${BRAND.name}. ${BRAND.tagline}`}
-            width={1244}
-            height={435}
+            width={690}
+            height={241}
             loading="lazy"
+            decoding="async"
             className="h-auto w-[230px]"
           />
           <p className="muted mt-6 max-w-[30ch] text-[0.9688rem]">
@@ -23,17 +24,17 @@ export default function Footer() {
 
         <nav aria-label="Services">
           <h2 className="label muted">Services</h2>
-          <ul className="mt-4 grid gap-2.5">
+          <ul className="mt-2 grid">
             {PACKAGES.map((p) => (
               <li key={p.slug}>
-                <Link href={p.slug} className="transition-colors hover:text-sky">
+                <Link href={p.slug} className="inline-flex min-h-11 items-center transition-colors hover:text-sky">
                   {p.name}
                 </Link>
               </li>
             ))}
             {QUOTED.map((q) => (
               <li key={q.slug}>
-                <Link href={q.slug} className="transition-colors hover:text-sky">
+                <Link href={q.slug} className="inline-flex min-h-11 items-center transition-colors hover:text-sky">
                   {q.name}
                 </Link>
               </li>
@@ -43,7 +44,7 @@ export default function Footer() {
 
         <nav aria-label="Explore">
           <h2 className="label muted">Explore</h2>
-          <ul className="mt-4 grid gap-2.5">
+          <ul className="mt-2 grid">
             {[
               { label: "Our work", href: "/portfolio/" },
               { label: "About Jake", href: "/about/" },
@@ -51,7 +52,7 @@ export default function Footer() {
               { label: "Book a detail", href: BOOK_HREF },
             ].map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="transition-colors hover:text-sky">
+                <Link href={l.href} className="inline-flex min-h-11 items-center transition-colors hover:text-sky">
                   {l.label}
                 </Link>
               </li>
@@ -61,24 +62,24 @@ export default function Footer() {
 
         <div>
           <h2 className="label muted">Contact</h2>
-          <ul className="mt-4 grid gap-2.5">
+          <ul className="mt-2 grid">
             <li>
-              <a href={`tel:${BRAND.phoneTel}`} className="transition-colors hover:text-sky">
+              <a href={`tel:${BRAND.phoneTel}`} className="inline-flex min-h-11 items-center transition-colors hover:text-sky">
                 {BRAND.phone}
               </a>
             </li>
             <li>
-              <a href={`mailto:${BRAND.email}`} className="break-all transition-colors hover:text-sky">
+              <a href={`mailto:${BRAND.email}`} className="inline-flex min-h-11 items-center break-all transition-colors hover:text-sky">
                 {BRAND.email}
               </a>
             </li>
             <li>
-              <a href={BRAND.google.mapsUrl} target="_blank" rel="noopener" className="transition-colors hover:text-sky">
+              <a href={BRAND.google.mapsUrl} target="_blank" rel="noopener" className="inline-flex min-h-11 items-center transition-colors hover:text-sky">
                 {BRAND.city}, {BRAND.region} on Google Maps
               </a>
             </li>
           </ul>
-          <dl className="muted mt-6 grid gap-1.5 text-[0.9063rem]">
+          <dl className="muted mt-4 grid gap-1.5 text-[0.9063rem]">
             {HOURS.map((h) => (
               <div key={h.days} className="flex justify-between gap-x-4">
                 <dt>
@@ -94,15 +95,15 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/14">
-        <div className="wrap muted flex flex-col gap-3 py-6 text-[0.8438rem] md:flex-row md:items-center md:justify-between">
+        <div className="wrap muted flex flex-col gap-1 py-4 text-[0.8438rem] md:flex-row md:items-center md:justify-between">
           <p>
             © {new Date().getFullYear()} {BRAND.name}
           </p>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
-            <Link href="/privacy/" className="transition-colors hover:text-white">
+          <div className="flex flex-wrap items-center gap-x-6">
+            <Link href="/privacy/" className="inline-flex min-h-11 items-center transition-colors hover:text-white">
               Privacy
             </Link>
-            <a href="https://modernapexstrategies.com" target="_blank" rel="noopener" className="transition-colors hover:text-white">
+            <a href="https://modernapexstrategies.com" target="_blank" rel="noopener" className="inline-flex min-h-11 items-center transition-colors hover:text-white">
               Website &amp; marketing by Modern Apex Strategies
             </a>
           </div>

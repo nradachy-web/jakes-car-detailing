@@ -176,7 +176,7 @@ export default function PaintCorrectionPage() {
         focus="0% 55%"
       >
         <QuoteActions service="correction" />
-        <GoogleRating className="mt-8 text-white transition-colors hover:text-sky" />
+        <GoogleRating className="mt-5 text-white transition-colors hover:text-sky" />
       </PageHero>
 
       {/* The centrepiece: the swirl panel, and how to read it. */}

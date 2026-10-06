@@ -17,6 +17,8 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropOpen, setDropOpen] = useState(false);
   const dropRef = useRef<HTMLLIElement>(null);
+  const dropButtonRef = useRef<HTMLButtonElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -26,19 +28,26 @@ export default function Navbar() {
   }, []);
 
   // The open mobile menu owns the screen: lock the page behind it.
+  // Focus must stay in it too.
   useEffect(() => {
     document.documentElement.style.overflow = menuOpen ? "hidden" : "";
+    const behind = document.querySelectorAll<HTMLElement>("#main, body > footer, [data-sticky-bar]");
+    behind.forEach((el) => el.toggleAttribute("inert", menuOpen));
     return () => {
       document.documentElement.style.overflow = "";
+      behind.forEach((el) => el.removeAttribute("inert"));
     };
   }, [menuOpen]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setMenuOpen(false);
-        setDropOpen(false);
-      }
+      if (e.key !== "Escape") return;
+      // Closing hides whatever had focus, so hand focus back to the button that opened it.
+      const active = document.activeElement;
+      if (active && document.getElementById("mobile-menu")?.contains(active)) menuButtonRef.current?.focus();
+      if (active && document.getElementById("nav-detailing")?.contains(active)) dropButtonRef.current?.focus();
+      setMenuOpen(false);
+      setDropOpen(false);
     };
     const onDown = (e: PointerEvent) => {
       if (dropRef.current && !dropRef.current.contains(e.target as Node)) setDropOpen(false);
@@ -64,7 +73,7 @@ export default function Navbar() {
       style={{ background: solid ? "#000" : "transparent" }}
     >
       <div className="wrap flex h-[var(--nav-h)] items-center justify-between gap-6">
-        <Link href="/" aria-label={`${BRAND.name}, home`} className="relative z-[2] shrink-0">
+        <Link href="/" aria-label={`${BRAND.name}, home`} className="relative z-[2] flex min-h-11 shrink-0 items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={asset("/brand/logo-lockup-480.webp")}
@@ -80,8 +89,16 @@ export default function Navbar() {
           <ul className="flex items-center gap-8">
             {NAV.map((item) =>
               item.children ? (
-                <li key={item.label} ref={dropRef} className="relative">
+                <li
+                  key={item.label}
+                  ref={dropRef}
+                  className="relative"
+                  onBlur={(e) => {
+                    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setDropOpen(false);
+                  }}
+                >
                   <button
+                    ref={dropButtonRef}
                     type="button"
                     aria-expanded={dropOpen}
                     aria-controls="nav-detailing"
@@ -139,6 +156,7 @@ export default function Navbar() {
             {BOOK_LABEL}
           </Link>
           <button
+            ref={menuButtonRef}
             type="button"
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -185,7 +203,7 @@ export default function Navbar() {
               { label: "Reviews", href: "/#reviews" },
             ].map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="label block py-3 text-white/86">
+                <Link href={l.href} className="label flex min-h-11 items-center text-white/86">
                   {l.label}
                 </Link>
               </li>

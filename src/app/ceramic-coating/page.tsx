@@ -152,7 +152,7 @@ export default function CeramicCoatingPage() {
         focus="100% 50%"
       >
         <QuoteActions service="ceramic" />
-        <GoogleRating className="mt-8 text-white transition-colors hover:text-sky" />
+        <GoogleRating className="mt-5 text-white transition-colors hover:text-sky" />
       </PageHero>
 
       {/* The centrepiece: water on bare paint against water on coated paint. */}

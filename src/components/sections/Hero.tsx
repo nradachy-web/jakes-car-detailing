@@ -56,7 +56,7 @@ export default function Hero() {
             Call {BRAND.phone}
           </a>
         </div>
-        <GoogleRating className="mt-8 text-white transition-colors hover:text-sky" />
+        <GoogleRating className="mt-5 text-white transition-colors hover:text-sky" />
       </div>
 
       <nav aria-label="Services and prices" className="rail">
